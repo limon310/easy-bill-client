@@ -2,11 +2,24 @@ import React from 'react';
 import logoImg from '../assets/logo1png.png'
 import { Link } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import { toast } from 'react-toastify';
 const Navbar = () => {
-    const {user} = useAuth();
+    const {user, signOutUser} = useAuth();
     const links = <>
         <li><Link to='/'>Home</Link></li>
     </>
+
+    // handle sign out
+    const handleSignOut = ()=>{
+        console.log("sign out button clicked")
+        signOutUser()
+        .then(()=>{
+            toast.success("sign out success");
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    }
     return (
         <div>
             <div className="navbar bg-base-100 shadow-sm">
@@ -32,7 +45,7 @@ const Navbar = () => {
                 <div className="navbar-end">
                     {
                         user
-                        ?<button className='btn btn-active btn-primary'>Log Out</button>
+                        ?<button onClick={handleSignOut} className='btn btn-active btn-primary'>Log Out</button>
                         :<Link to='/login' className="btn btn-active btn-primary">Login</Link>
                     }
                 </div>
