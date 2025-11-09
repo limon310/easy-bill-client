@@ -3,6 +3,8 @@ import RootLayouts from "../Layouts/RootLayouts";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import Bills from "../Pages/Bills";
+import MyPayBills from "../Pages/MyPayBills";
 
 const router = createBrowserRouter([
     {
@@ -11,7 +13,17 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component: Home
+                Component: Home,
+                loader: () => fetch("http://localhost:3000/recent-bills")
+            },
+            {
+                path: '/bills',
+                Component: Bills,
+                loader: () => fetch("http://localhost:3000/bills")
+            },
+            {
+                path: '/myPayBills',
+                element: <MyPayBills></MyPayBills>
             },
             {
                 path: '/register',

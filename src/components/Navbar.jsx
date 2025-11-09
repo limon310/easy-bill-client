@@ -3,22 +3,29 @@ import logoImg from '../assets/logo1png.png'
 import { Link } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-toastify';
+import userImg from '../assets/user.png'
 const Navbar = () => {
-    const {user, signOutUser} = useAuth();
+    const { user, signOutUser } = useAuth();
     const links = <>
         <li><Link to='/'>Home</Link></li>
+        <li><Link to='/bills'>Bills</Link></li>
+        {
+            user && <>
+                <li><Link to='/myPayBills'>My Pay Bills</Link></li>
+            </>
+        }
     </>
 
     // handle sign out
-    const handleSignOut = ()=>{
+    const handleSignOut = () => {
         console.log("sign out button clicked")
         signOutUser()
-        .then(()=>{
-            toast.success("sign out success");
-        })
-        .catch(error=>{
-            console.log(error)
-        })
+            .then(() => {
+                toast.success("sign out success");
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
     return (
         <div>
@@ -43,10 +50,27 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
+                    <div className="dropdown dropdown-end">
+                        <div tabIndex={0} role="button" className="btn m-1">
+                            {
+                                user
+                                    ?
+                                    <img className='w-10 h-10' src={userImg} alt="" />
+                                    : ""
+                            }
+                        </div>
+                        <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                            {
+                                user
+                                    ? <p>{user.displayName}</p>
+                                    : ""
+                            }
+                        </ul>
+                    </div>
                     {
                         user
-                        ?<button onClick={handleSignOut} className='btn btn-active btn-primary'>Log Out</button>
-                        :<Link to='/login' className="btn btn-active btn-primary">Login</Link>
+                            ? <button onClick={handleSignOut} className='btn btn-active btn-primary'>Log Out</button>
+                            : <Link to='/login' className="btn btn-active btn-primary">Login</Link>
                     }
                 </div>
             </div>

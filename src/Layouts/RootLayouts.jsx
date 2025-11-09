@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 
 const RootLayouts = () => {
     return (
-        <div>
+        <div className='w-11/12 mx-auto'>
             <header>
                 <Navbar></Navbar>
             </header>
