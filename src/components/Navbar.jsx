@@ -1,6 +1,10 @@
 import React from 'react';
-
+import logoImg from '../assets/logo1png.png'
+import { Link } from 'react-router';
 const Navbar = () => {
+    const links = <>
+        <li><Link to='/'>Home</Link></li>
+    </>
     return (
         <div>
             <div className="navbar bg-base-100 shadow-sm">
@@ -12,20 +16,19 @@ const Navbar = () => {
                         <ul
                             tabIndex="-1"
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            <li><a>Item 1</a></li>
-                            
+                            {links}
                         </ul>
                     </div>
                     <a className="btn btn-ghost text-xl">EasyBill</a>
+                    <img className='w-10 h-10 rounded-full' src={logoImg} alt="" />
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                        <li><a>Item 1</a></li>
-                        
+                        {links}
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Login</a>
+                    <Link to='/login' className="btn btn-active btn-primary">Login</Link>
                 </div>
             </div>
         </div>

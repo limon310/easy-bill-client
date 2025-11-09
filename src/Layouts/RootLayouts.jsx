@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
+import { Outlet } from 'react-router';
 
 const RootLayouts = () => {
     return (
@@ -8,10 +9,10 @@ const RootLayouts = () => {
                 <Navbar></Navbar>
             </header>
             <main>
-
+                <Outlet></Outlet>
             </main>
             <footer>
-                
+
             </footer>
         </div>
     );
