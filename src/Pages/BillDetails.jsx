@@ -3,9 +3,9 @@ import { Link, useLoaderData } from 'react-router';
 
 const BillDetails = () => {
     const bill = useLoaderData();
-    console.log(bill);
+    // console.log(bill);
     const { title, category, location, description, image, amount, date } = bill;
-    console.log(amount)
+    // console.log(amount)
     return (
         <div className='mt-10'>
             <h2 className='mb-10'>Bill details Page</h2>

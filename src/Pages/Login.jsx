@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-toastify';
 
 const Login = () => {
     const {signInUser, signInWithGoogle} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    // console.log(location);
     // handle login
     const handleLogin = e =>{
         e.preventDefault();
@@ -18,7 +20,7 @@ const Login = () => {
         .then(result=>{
             console.log(result);
             toast.success("login success");
-            navigate("/");
+            navigate(location.pathname || "/");
         })
         .catch(err=>{
             console.log(err);

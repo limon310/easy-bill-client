@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const AllBilsCard = ({ bill }) => {
-    console.log(bill)
+    // console.log(bill)
     const { image, title, category, location, amount, _id } = bill;
     return (
         <div>
