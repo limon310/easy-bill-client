@@ -2,7 +2,7 @@ import React from 'react';
 import BillsCategory from '../components/BillsCategory';
 import RecentBills from './RecentBills';
 import { useLoaderData } from 'react-router';
-import BillsCard from '../components/BillsCard';
+import RecentBillsCard from '../components/RecentBillsCard';
 
 const Home = () => {
     const bills = useLoaderData();
@@ -21,10 +21,10 @@ const Home = () => {
             {/* <RecentBills></RecentBills> */}
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
                 {
-                    bills.map(bill => <BillsCard
+                    bills.map(bill => <RecentBillsCard
                     key={bill._id}
                     bill={bill}
-                    ></BillsCard>)
+                    ></RecentBillsCard>)
                 }
             </div>
         </div>

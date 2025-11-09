@@ -1,8 +1,9 @@
-import React, { use } from 'react';
+import React, { } from 'react';
+import { Link } from 'react-router';
 
-const BillsCard = ({bill}) => {
-    const {title, category, date, location} = bill;
-    console.log(title)
+const RecentBillsCard = ({bill}) => {
+    const {title, category, date, location, _id} = bill;
+    // console.log(_id)
     return (
         <div>
             <div className="card bg-base-100 shadow-sm">
@@ -18,7 +19,7 @@ const BillsCard = ({bill}) => {
                     <p>Location: {location}</p>
                     <p>Date: {date}</p>
                     <div className="card-actions">
-                        <button className="btn btn-primary">See Details</button>
+                        <Link to={`/bills-details/${_id}`} className="btn btn-primary">See Details</Link>
                     </div>
                 </div>
             </div>
@@ -26,4 +27,4 @@ const BillsCard = ({bill}) => {
     );
 };
 
-export default BillsCard;
+export default RecentBillsCard;

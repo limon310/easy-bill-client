@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+*{
+    @apply space-y-1
+}
