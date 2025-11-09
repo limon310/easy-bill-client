@@ -1,7 +1,9 @@
 import React from 'react';
 import logoImg from '../assets/logo1png.png'
 import { Link } from 'react-router';
+import useAuth from '../hooks/useAuth';
 const Navbar = () => {
+    const {user} = useAuth();
     const links = <>
         <li><Link to='/'>Home</Link></li>
     </>
@@ -28,7 +30,11 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to='/login' className="btn btn-active btn-primary">Login</Link>
+                    {
+                        user
+                        ?<button className='btn btn-active btn-primary'>Log Out</button>
+                        :<Link to='/login' className="btn btn-active btn-primary">Login</Link>
+                    }
                 </div>
             </div>
         </div>
