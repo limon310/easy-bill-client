@@ -75,7 +75,7 @@ const Banner = () => {
     >
       {cards.map(card => (
         <SwiperSlide key={card.id}>
-          <div className="bg-gray-400 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
+          <div className="bg-gray-400 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row mt-10 mb-20">
             <img
               src={card.image}
               alt={card.title}
