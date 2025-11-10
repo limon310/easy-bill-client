@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logoImg from '../assets/logo1png.png'
 import { Link } from 'react-router';
 import useAuth from '../hooks/useAuth';
@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import userImg from '../assets/user.png'
 const Navbar = () => {
     const { user, signOutUser } = useAuth();
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
     const links = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/bills'>Bills</Link></li>
@@ -26,6 +27,17 @@ const Navbar = () => {
             .catch(error => {
                 console.log(error)
             })
+    }
+
+      useEffect(() => {
+    const html = document.querySelector('html')
+     html.setAttribute("data-theme", theme)
+     localStorage.setItem("theme", theme)
+  }, [theme])
+
+    // handle theme
+    const handleTheme = (checked) => {
+         setTheme(checked ? "dark": "light")
     }
     return (
         <div>
@@ -50,6 +62,13 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
+
+                    <input
+                        onChange={(e) => handleTheme(e.target.checked)}
+                        type="checkbox"
+                        defaultChecked={localStorage.getItem('theme') === "dark"}
+                        className="toggle" />
+
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn m-1">
                             {
