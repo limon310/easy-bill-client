@@ -22,8 +22,8 @@ const BillDetails = () => {
         console.log(billYear)
         const currentMonth = today.getMonth();
         const currentYear = today.getFullYear();
-        console.log(`Bill Month/Year: ${billMonth + 1}/${billYear}`);
-        console.log(`Current Month/Year: ${currentMonth + 1}/${currentYear}`);
+        // console.log(`Bill Month/Year: ${billMonth + 1}/${billYear}`);
+        // console.log(`Current Month/Year: ${currentMonth + 1}/${currentYear}`);
         if(billMonth == currentMonth && billYear == currentYear){
             modalRef.current.showModal();
         }
@@ -44,7 +44,7 @@ const BillDetails = () => {
         const address = e.target.address.value;
         const phone = e.target.phone.value;
         const date = e.target.date.value;
-        console.log("pay bil button clicked", email, billId, amount, userName, address, phone, date);
+        // console.log("pay bil button clicked", email, billId, amount, userName, address, phone, date);
 
         const newBill = { email, billId, amount, userName, address, phone, date }
 
@@ -58,6 +58,9 @@ const BillDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success("Bill pay successfull");
+                if(data.insertedId){
+                    modalRef.current.close();
+                }
                 console.log("after post:", data);
             })
     }
@@ -84,8 +87,7 @@ const BillDetails = () => {
 
                         <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
                             <div className="modal-box">
-                                <h3 className="font-bold text-lg">Give the best offer!</h3>
-                                <p className="py-4">Offer something seller can not resist</p>
+                                <h3 className="font-bold text-lg">Pay Your Bill Just One Click!</h3>
                                 <form onSubmit={handlePayBill}>
                                     <fieldset className="fieldset">
                                         {/* email */}
@@ -127,7 +129,6 @@ const BillDetails = () => {
 
                                 <div className="modal-action">
                                     <form method="dialog">
-                                        {/* if there is a button in form, it will close the modal */}
                                         <button className="btn">Cancel</button>
                                     </form>
                                 </div>

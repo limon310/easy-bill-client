@@ -7,6 +7,9 @@ import Bills from "../Pages/Bills";
 import MyPayBills from "../Pages/MyPayBills";
 import BillDetails from "../Pages/BillDetails";
 import PrivateRoutes from "./PrivateRoutes";
+import AboutUs from "../Pages/AboutUs";
+import Contuct from "../Pages/Contuct";
+import UpdateBills from "../Pages/UpdateBills";
 
 const router = createBrowserRouter([
     {
@@ -34,8 +37,13 @@ const router = createBrowserRouter([
                 path: '/myPayBills',
                 element: <PrivateRoutes>
                     <MyPayBills></MyPayBills>
-                </PrivateRoutes>
+                </PrivateRoutes>,
             },
+            // {
+            //     path: '/update-bills/:id',
+            //     element: <UpdateBills></UpdateBills>,
+            //     loader: ({params}) => fetch(`http://localhost:3000/my-bills/${params.id}`)
+            // },
             {
                 path: '/register',
                 Component: Register
@@ -43,6 +51,15 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 Component: Login
+            },
+            // aditional routes
+            {
+                path: '/aboutUs',
+                Component: AboutUs
+            },
+            {
+                path: '/contuct',
+                Component: Contuct
             }
         ]
     }

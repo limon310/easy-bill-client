@@ -15,6 +15,8 @@ const Navbar = () => {
                 <li><Link to='/myPayBills'>My Pay Bills</Link></li>
             </>
         }
+        <li><Link to="/aboutUs">About Us</Link></li>
+        <li><Link to="/contuct">Contuct</Link></li>
     </>
 
     // handle sign out
