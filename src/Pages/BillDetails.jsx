@@ -16,10 +16,10 @@ const BillDetails = () => {
 
         const today = new Date();
         const billDate = new Date(date);
-        console.log(billDate)
+        // console.log(billDate)
         const billMonth = billDate.getMonth();
         const billYear = billDate.getFullYear();
-        console.log(billYear)
+        // console.log(billYear)
         const currentMonth = today.getMonth();
         const currentYear = today.getFullYear();
         // console.log(`Bill Month/Year: ${billMonth + 1}/${billYear}`);
@@ -61,7 +61,7 @@ const BillDetails = () => {
                 if(data.insertedId){
                     modalRef.current.close();
                 }
-                console.log("after post:", data);
+                // console.log("after post:", data);
             })
     }
 

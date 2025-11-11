@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import { Link } from 'react-router';
 import { Trash2 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const MyPayBills = () => {
     const { user } = useAuth();
     const [bills, setBills] = useState([])
+    const [selectedBillsId, setSelectedBillsId] = useState(null)
     const modalRef = useRef();
 
     useEffect(() => {
@@ -16,11 +18,11 @@ const MyPayBills = () => {
                 .then(res => res.json())
                 .then(data => {
                     setBills(data);
-                    console.log(data);
+                    // console.log(data);
                 })
         }
-    }, [user?.email])
-    console.log(bills)
+    }, [user?.email,])
+    // console.log(bills)
 
     // handle delete
     const handleDelete = (id) => {
@@ -42,7 +44,7 @@ const MyPayBills = () => {
                     .then(res => res.json())
                     .then(data => {
                         console.log("after delete", data);
-                        if (data.deletedCount) {
+                        if (data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
@@ -57,25 +59,26 @@ const MyPayBills = () => {
     }
 
     // handle open modal
-    const handleOpenModal = () => {
-        // console.log("update button clicked")
+    const handleOpenModal = (id) => {
+        // console.log("update button clicked", id)
+        setSelectedBillsId(id)
         modalRef.current.showModal();
     }
-
     // handleUpdate
     const handleUpdate = e => {
         e.preventDefault();
+        const updatedBillId = selectedBillsId;
         const userName = e.target.userName.value;
         const email = e.target.email.value;
         const amount = e.target.amount.value;
         const address = e.target.address.value;
         const phone = e.target.phone.value;
         const date = e.target.date.value;
-        console.log("clicked Update", userName, email, amount, address, phone, date);
+        // console.log("clicked Update", userName, email, amount, address, phone, date);
 
         const updateBill = { userName, email, amount, address, phone, date }
 
-        fetch(`http://localhost:3000/my-bills/${_id}`, {
+        fetch(`http://localhost:3000/my-bills/${selectedBillsId}`, {
             method: "PATCH",
             headers: {
                 'content-type': 'application/json'
@@ -86,13 +89,112 @@ const MyPayBills = () => {
             .then(data => {
                 toast("bill update successfully");
                 console.log(data);
+
+                if (data.modifiedCount > 0) {
+                    const updatedBillData = bills.map(bill => {
+                        if (bill._id === updatedBillId) {
+                            return { ...bill, ...updateBill };
+                        }
+                        return bill;
+                    });
+                    setBills(updatedBillData);
+                    modalRef.current.close();
+                }
             })
 
     }
+
+    // download bills pdf
+    // const downloadPDF = () => {
+    //     const doc = new jsPDF();
+    //     doc.text("EasyBill - My Bills Summary", 14, 15);
+
+    //     const tableColumn = ["Title", "Category", "Amount", "Date"];
+    //     const tableRows = bills.map((bill) => [
+    //         bill.title,
+    //         bill.category,
+    //         bill.amount,
+    //         bill.date,
+    //     ]);
+
+    //     if(doc.autoTable){
+    //         doc.autoTable({
+    //         head: [tableColumn],
+    //         body: tableRows,
+    //         styles: { fontSize: 14, cellPadding: 4 },
+    //         headStyles: { fillColor: [25, 118, 210], textColor: 255 },
+    //         alternateRowStyles: { fillColor: [240, 240, 240] },
+    //     });  
+    //     }
+    //     else{
+    //         toast.error("❌ autoTable plugin not loaded properly!");
+    //         console.error("autoTable not found on jsPDF instance.");
+    //     }
+    //     // doc.autoTable({
+    //     //     head: [tableColumn],
+    //     //     body: tableRows,
+    //     //     styles: { fontSize: 14, cellPadding: 4 },
+    //     //     headStyles: { fillColor: [25, 118, 210], textColor: 255 },
+    //     //     alternateRowStyles: { fillColor: [240, 240, 240] },
+    //     // });
+
+    //     doc.save("my-bills.pdf");
+    // }
+
+
+//   const doc = new jsPDF();
+//   doc.text("EasyBill - Single Bill Report", 14, 15);
+
+    const downloadPDF = () => {
+    const doc = new jsPDF();
+    let y = 20; // starting Y position
+
+    // Title
+    doc.setFontSize(16);
+    doc.text("EasyBill - My Bills Summary", 14, y);
+    y += 10;
+
+    // Table Header
+    doc.setFontSize(12);
+    doc.text("SL", 14, y);
+    doc.text("Name", 30, y);
+    doc.text("Email", 80, y);
+    doc.text("Amount", 140, y);
+    doc.text("Date", 170, y);
+    y += 6;
+
+    // Draw a line under header
+    doc.line(14, y, 200, y);
+    y += 4;
+
+    // Table rows
+    bills.forEach((bill, index) => {
+      doc.text(`${index + 1}`, 14, y);
+      doc.text(bill.userName || "N/A", 30, y);
+      doc.text(bill.email || "N/A", 80, y);
+      doc.text(`${bill.amount || 0}`, 140, y);
+      doc.text(bill.date || "N/A", 170, y);
+      y += 8;
+
+      // Page break
+      if (y > 280) {
+        doc.addPage();
+        y = 20;
+      }
+    });
+
+    doc.save("my-bills.pdf");
+    toast.success("✅ PDF downloaded successfully!");
+  };
+
+
+
     return (
         <div className='py-10'>
             <h2 className='text-3xl font-bold text-center'>My Bills: {bills.length}</h2>
-
+            <button onClick={downloadPDF} className="btn btn-primary mb-4">
+                Download My All Bills (PDF)
+            </button>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -104,6 +206,7 @@ const MyPayBills = () => {
                             <th>Bill Id</th>
                             <th>Update</th>
                             <th>Delete</th>
+                            <th>Download</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -140,7 +243,7 @@ const MyPayBills = () => {
                                     <span>{bill.date}</span>
                                 </td>
                                 <th>
-                                    <button onClick={handleOpenModal} className="btn btn-ghost btn-xs">Update</button>
+                                    <button onClick={() => handleOpenModal(bill._id)} className="btn btn-ghost btn-xs">Update</button>
                                     {/* <Link to={`/update-bills/${bill._id}`} className="btn btn-ghost btn-xs">Update</Link> */}
 
                                     {/* modal */}
@@ -183,21 +286,12 @@ const MyPayBills = () => {
                                 <th>
                                     <button onClick={() => handleDelete(bill._id)} className='btn btn-outline'><Trash2 /></button>
                                 </th>
+                                <th>
+                                    {/* <button onClick={()=>downloadSingleBill(bill)} className='cursor-pointer btn btn-outline'>Download Bill</button> */}
+                                </th>
                             </tr>)
                         }
-
-
                     </tbody>
-                    {/* foot */}
-                    {/* <tfoot>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
-                            <th></th>
-                        </tr>
-                    </tfoot> */}
                 </table>
             </div>
 
