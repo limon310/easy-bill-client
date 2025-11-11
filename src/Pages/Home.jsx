@@ -4,6 +4,8 @@ import RecentBills from './RecentBills';
 import { useLoaderData } from 'react-router';
 import RecentBillsCard from '../components/RecentBillsCard';
 import Banner from '../components/Banner';
+import ReferralSection from '../components/ReferralSection';
+import OurPartner from '../components/OurPartner';
 
 const Home = () => {
     const bills = useLoaderData();
@@ -23,6 +25,10 @@ const Home = () => {
                     ></RecentBillsCard>)
                 }
             </div>
+
+            <ReferralSection></ReferralSection>
+            <OurPartner></OurPartner>
+
         </div>
     );
 };

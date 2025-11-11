@@ -4,7 +4,7 @@ const recentBillsPromise = fetch("http://localhost:3000/recent-bills")
 .then(res=> res.json())
 const RecentBills = () => {
     return (
-        <div>
+        <div className=''>
             <h2>Recent Bills</h2>
             <RecentBillsCard recentBillsPromise={recentBillsPromise}></RecentBillsCard>
         </div>
