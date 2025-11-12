@@ -4,8 +4,8 @@ import youtubeLogo from '../assets/youtube logo.png';
 import { Link } from 'react-router';
 const Footer = () => {
     return (
-        <div>
-            <footer className="footer footer-horizontal footer-center bg-base-200 text-base-content rounded p-10">
+        <div className=''>
+            <footer className="footer footer-horizontal footer-center bg-gradient-to-br from-black via-gray-900 to-gray-800 text-yellow-400 rounded p-10">
                 <nav className="grid grid-flow-col gap-4">
                     <Link to='/aboutUs' className="link link-hover">About Us</Link>
                     <Link to="/contuct" className="link link-hover">Contact</Link>

@@ -68,10 +68,10 @@ const BillDetails = () => {
     return (
         <div className='py-10'>
             <h2 className='mb-10'>Bill details Page</h2>
-            <div className='flex gap-10 p-10 bg-gray-300 rounded-2xl'>
+            <div className='flex gap-10 justify-center p-10 rounded-2xl'>
                 <div className=''>
-                    <img className='rounded-2xl h-[350px]'
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="" />
+                    <img className='rounded-2xl  w-[500px] h-[450px]'
+                        src={image} alt="" />
                 </div>
                 <div className=''>
                     <h2 className='text-2xl font-bold '>{title}</h2>

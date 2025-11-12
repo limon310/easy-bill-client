@@ -1,30 +1,33 @@
 import React, { } from 'react';
 import { Link } from 'react-router';
+import { motion } from "framer-motion";
 
-const RecentBillsCard = ({bill}) => {
-    const {title, category, date, location, _id} = bill;
+const RecentBillsCard = ({ bill }) => {
+    const { title, category, date, location, _id } = bill;
     // console.log(_id)
     return (
-        <div>
-            <div className="card bg-base-100 shadow-sm">
-                {/* <figure className="px-10 pt-10">
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                        alt="Shoes"
-                        className="rounded-xl" />
-                </figure> */}
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title">{title}</h2>
-                    <h3>{category}</h3>
-                    <p>Location: {location}</p>
-                    <p>Date: {date}</p>
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}>
+
+            <motion.div className="card bg-base-300 shadow-sm "
+
+            >
+                <div className="card-body items-center text-center h-[300px]">
+                    <h2 className="card-title text-2xl font-bold text-amber-500">{title}</h2>
+                    <h3 className='text-xl font-semibold'>{category}</h3>
+                    <p className='text-lg text-gray-700'>Location: {location}</p>
+                    <p className='text-lg'>Date: {date}</p>
                     <div className="card-actions">
-                        <Link to={`/bills-details/${_id}`} className="btn btn-primary">See Details</Link>
+                        <Link to={`/bills-details/${_id}`} className="btn btn-primary text-lg">See Details</Link>
                     </div>
                 </div>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 
 export default RecentBillsCard;
+

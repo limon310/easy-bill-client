@@ -56,6 +56,7 @@
 // export default ReferralSection;
 
 
+import { ArrowRightToLine, DollarSign, Megaphone } from 'lucide-react';
 import React from 'react';
 
 const ReferralSection = () => {
@@ -63,7 +64,7 @@ const ReferralSection = () => {
     <div className=" mx-auto p-8 rounded-xl shadow-2xl text-center bg-gradient-to-br from-black via-gray-900 to-gray-800 text-yellow-400">
       
       {/* Header */}
-      <h2 className="text-4xl font-extrabold text-gray-200 mb-4 py-3">
+      <h2 className="text-4xl font-extrabold mb-4 py-3">
         Share the Love, Get Rewards!
       </h2>
       <p className="text-xl text-gray-400">
@@ -77,21 +78,17 @@ const ReferralSection = () => {
         <div className="p-6 bg-blue-50 rounded-lg shadow-lg transition duration-300 hover:shadow-xl hover:scale-[1.02]">
           <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
             {/* Icon (Replace with a proper React Icon component like Lucide or Heroicons) */}
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 11-8 0 4 4 0 018 0zm14 0a4 4 0 11-8 0 4 4 0 018 0zm-4 4h-4"></path>
-            </svg>
+            <span><Megaphone /></span>
           </div>
           <h3 className="text-2xl font-semibold text-gray-800 mb-3">Spread the Word</h3>
-          <p className="text-gray-600">Share your unique **referral link** with friends, family, and colleagues.</p>
+          <p className="text-gray-600">Share your unique referral link ** with friends, family, and colleagues.</p>
         </div>
 
         {/* Step 2: They Join & Explore */}
         <div className="p-6 bg-blue-50 rounded-lg shadow-lg transition duration-300 hover:shadow-xl hover:scale-[1.02]">
           <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
             {/* Icon */}
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <span><ArrowRightToLine /></span>
           </div>
           <h3 className="text-2xl font-semibold text-gray-800 mb-3">They Join & Explore</h3>
           <p className="text-gray-600">They sign up using your link and discover our amazing features and services.</p>
@@ -101,12 +98,10 @@ const ReferralSection = () => {
         <div className="p-6 bg-blue-50 rounded-lg shadow-lg transition duration-300 hover:shadow-xl hover:scale-[1.02]">
           <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
             {/* Icon */}
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <span><DollarSign /></span>
           </div>
           <h3 className="text-2xl font-semibold text-gray-800 mb-3">You Get Rewarded</h3>
-          <p className="text-gray-600">Receive exclusive **perks, discounts, or bonus points** for every successful referral.</p>
+          <p className="text-gray-600">Receive exclusive discounts, or bonus points for every successful referral.</p>
         </div>
       </div>
 
