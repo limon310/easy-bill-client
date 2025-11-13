@@ -10,7 +10,9 @@ const RecentBillsCard = ({ bill }) => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}>
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.05, boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.15)" }}>
+                
 
             <motion.div className="card bg-base-300 shadow-sm "
 

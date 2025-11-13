@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import logoImg from '../assets/logo1png.png'
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-toastify';
 import userImg from '../assets/user.png'
@@ -8,15 +8,15 @@ const Navbar = () => {
     const { user, signOutUser } = useAuth();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
     const links = <>
-        <li><Link to='/'>Home</Link></li>
-        <li><Link to='/bills'>Bills</Link></li>
+        <li><NavLink to='/'>Home</NavLink></li>
+        <li><NavLink to='/bills'>Bills</NavLink></li>
         {
             user && <>
-                <li><Link to='/myPayBills'>My Pay Bills</Link></li>
+                <li><NavLink to='/myPayBills'>My Pay Bills</NavLink></li>
             </>
         }
-        <li><Link to="/aboutUs">About Us</Link></li>
-        <li><Link to="/contuct">Contuct</Link></li>
+        <li><NavLink to="/aboutUs">About Us</NavLink></li>
+        <li><NavLink to="/contuct">Contuct</NavLink></li>
     </>
 
     // handle sign out
@@ -51,7 +51,7 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex="-1"
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-lg">
                             {links}
                         </ul>
                     </div>
@@ -59,7 +59,7 @@ const Navbar = () => {
                     <img className='w-10 h-10 rounded-full' src={logoImg} alt="" />
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
+                    <ul className="menu menu-horizontal px-1 text-lg">
                         {links}
                     </ul>
                 </div>
@@ -71,32 +71,9 @@ const Navbar = () => {
                         defaultChecked={localStorage.getItem('theme') === "dark"}
                         className="toggle mr-3" />
 
-                    {/* <div className="dropdown dropdown-end">
-                        <div tabIndex={0} role="button" className="btn m-1">
-                            {
-                                user
-                                    ?
-                                    <img className='w-10 h-10' src={userImg} alt="" />
-                                    : ""
-                            }
-                        </div>
-                        <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                            {
-                                user
-                                    ? <p>{user.displayName}</p>
-                                    : ""
-                            }
-                        </ul>
-                    </div>
-                    {
-                        user
-                            ? <button onClick={handleSignOut} className='btn btn-active btn-primary'>Log Out</button>
-                            : <Link to='/login' className="btn btn-active btn-primary">Login</Link>
-                    } */}
-
 
                     {user ? (
-                        <div className="dropdown dropdown-end z-50">
+                        <div className="dropdown dropdown-end z-50 flex items-center">
                             <div
                                 tabIndex={0}
                                 role="button"
@@ -130,6 +107,7 @@ const Navbar = () => {
                             </ul>
                         </div>
                     ) : (
+                        <>
                         <Link
                             to={"/login"}
                             className="btn rounded-full border-gray-300  btn-sm bg-linear-to-r from-pink-500 to-purple-500 text-white"
@@ -137,6 +115,8 @@ const Navbar = () => {
                             {" "}
                             Login
                         </Link>
+                        <Link to="/register" className='ml-3 btn btn-outline bg-gray-500   text-white rounded-2xl' >Register</Link>
+                        </>
                     )}
 
 

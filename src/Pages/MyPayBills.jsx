@@ -116,7 +116,6 @@ const MyPayBills = () => {
     },[user.email])
     // console.log(totalPaid)
 
-
     // DOWNLOAD ALL BILLS PDF
     // const downloadPDF = () => {
     //     const doc = new jsPDF();
@@ -141,13 +140,9 @@ const MyPayBills = () => {
     //     doc.save("my-bills.pdf");
     // }
 
-
-    //   const doc = new jsPDF();
-    //   doc.text("EasyBill - Single Bill Report", 14, 15);
-
     const downloadPDF = () => {
         const doc = new jsPDF();
-        let y = 20; // starting Y position
+        let y = 20; 
 
         // Title
         doc.setFontSize(16);
@@ -190,6 +185,7 @@ const MyPayBills = () => {
 
     return (
         <div className='w-11/12 mx-auto p-8 mt-10 mb-10 bg-gradient-to-br from-gray-900 via-indigo-900 to-black text-white rounded-2xl'>
+            <title>Easy Bill My-Pay-Bills</title>
             <h2 className='text-3xl font-bold text-center'>My Bills: {bills.length}</h2>
 
             {/* download all bils pdf btn */}

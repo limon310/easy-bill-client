@@ -1,11 +1,18 @@
+import { motion } from 'framer-motion';
 import React, { } from 'react';
-import electricitImg from '../assets/electricity.jpg'
+
 const CategoryCard = ({ categorie }) => {
     // console.log(categorie)
-    const {title, category, location, date, image } = categorie;
+    const { title, image } = categorie;
     return (
         <div className='py-8'>
-            <div className="card bg-base-100 shadow-sm">
+            <motion.div 
+            className="card bg-base-100"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.05, boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.15)" }}>
                 <figure className="px-10 pt-10">
                     <img
                         src={image}
@@ -15,7 +22,7 @@ const CategoryCard = ({ categorie }) => {
                 <div className="card-body items-center text-center">
                     <h2 className="text-2xl font-semibold">{title}</h2>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };

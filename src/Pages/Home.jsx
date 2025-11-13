@@ -7,6 +7,7 @@ import Banner from '../components/Banner';
 import ReferralSection from '../components/ReferralSection';
 import OurPartner from '../components/OurPartner';
 import SimpleTypeWriter from '../components/SimpleTypeWriter';
+import UpcomingBillsSection from '../components/UpcomingBillsSection';
 
 // category bills
 const categoryBillsPromise = fetch("https://easy-bill-server.vercel.app/category-bills")
@@ -41,6 +42,7 @@ const Home = () => {
             </div> */}
 
             <ReferralSection></ReferralSection>
+            <UpcomingBillsSection></UpcomingBillsSection>
             <OurPartner></OurPartner>
 
         </div>

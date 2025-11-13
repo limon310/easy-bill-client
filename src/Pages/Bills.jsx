@@ -27,7 +27,7 @@ const Bills = () => {
 
     return (
         <div className='w-11/12 mx-auto mt-15 mb-20'>
-
+            <title>Easy Bill All-Bills</title>
             <div className="flex justify-center items-center gap-5 py-5">
                 <select
                     value={selectByCategory}

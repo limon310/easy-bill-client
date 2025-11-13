@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
 
 const BillDetails = () => {
     const { user } = useAuth();
@@ -66,20 +65,20 @@ const BillDetails = () => {
     }
 
     return (
-        <div className='py-10 text-white w-11/12 mx-auto'>
-            <h2 className='text-3xl font-bold text-center text-yellow-400'>Bill details Page</h2>
-            <div className='flex gap-10 justify-center p-10 rounded-2xl'>
+        <div className='py-10 w-11/12 mx-auto'>
+            <h2 className='text-3xl font-bold text-center text-yellow-400 pb-10'>Bill details Page</h2>
+            <div className='flex gap-10 justify-center p-10 rounded-2xl bg-gray-500 text-white'>
                 <div className=''>
                     <img className='rounded-2xl  w-[500px] h-[450px]'
                         src={image} alt="" />
                 </div>
                 <div className=''>
-                    <h2 className='text-2xl font-bold '>{title}</h2>
-                    <p>{category}</p>
-                    <p>{description}</p>
-                    <p>{location}</p>
-                    <p>{amount}</p>
-                    <p>{date}</p>
+                    <h2 className='text-3xl font-bold text-yellow-400'>{title}</h2>
+                    <p className='text-2xl text-gray-900'>Category: {category}</p>
+                    <p className='text-2xl text-gray-900'>Description: {description}</p>
+                    <p className='text-2xl text-gray-900'>Location: {location}</p>
+                    <p className='text-2xl text-gray-900'>Amount: {amount}</p>
+                    <p className='text-2xl text-gray-900'>Date: {date}</p>
                     <div className='mt-10'>
                         <button
                             onClick={handleModalOpen}
@@ -137,11 +136,11 @@ const BillDetails = () => {
                     </div>
                 </div>
             </div>
-            <motion.div className='flex justify-end items-center'
+            <div className='flex justify-end items-center mt-5'
              
             >
                 <Link to="/" className='btn btn-primary'>Back Home</Link>
-            </motion.div>
+            </div>
         </div>
     );
 };

@@ -60,6 +60,7 @@ const Register = () => {
     }
     return (
         <div className='mb-12 mt-16'>
+            <title>Easy Bill Register</title>
             <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
                 <div className="card-body">
                     <h1 className="text-5xl font-bold mb-5">Register Now</h1>

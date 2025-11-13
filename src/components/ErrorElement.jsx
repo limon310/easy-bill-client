@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 const ErrorElement = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-500 dark:bg-gray-900">
+            <title>Error</title>
             <div className="text-center p-8 max-w-lg bg-white dark:bg-gray-800 rounded-lg shadow-xl transform transition duration-500 hover:scale-[1.02]">
 
                 <h1 className="text-9xl font-extrabold text-indigo-600 dark:text-indigo-400 mb-4 animate-pulse">

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 const AboutUs = () => {
     return (
         <section className="w-11/12 mx-auto bg-gray-900 text-gray-100 py-16 px-6 md:px-20 text-center">
+            <title>Easy Bill About-Us</title>
             <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
