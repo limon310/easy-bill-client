@@ -1,16 +1,69 @@
-# React + Vite
+# 💳 Pay Bill Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application designed to simplify utility bill management.  
+Users can view, pay, download, and track bills efficiently — all in one place.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- 🔐 **User Authentication**
+  - Register, login, and manage your account securely.
+- 📄 **Bill Management**
+  - Add, view, update, and delete bills easily.
+- 💰 **Bill Payment System**
+  - Pay bills online and track total paid amount.
+- 📊 **Total Paid Tracking**
+  - User can see how many bill he successfully paid payment.
+- 🔍 **Search & Filter**
+  - Search bills by category with dropdown filtering.
+- 🧾 **PDF Export**
+  - Generate and download your payment history in PDF format.
+- ⚡ **Real-time Updates**
+  - UI updates instantly without page reload.
+- 🌈 **Responsive UI**
+  - Clean and modern interface built with Tailwind CSS and React.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Frontend:**
+- React.js
+- React Router
+- Tailwind CSS
+- Lucide Icons
+- SweetAlert2
+- React Toastify
+- framer motion
+-lottie react
+- jsPDF + jsPDF AutoTable
+
+**Backend:**
+- Node.js
+- Express.js
+- MongoDB 
+
+---
+
+💡 Future Improvements
+
+✅ Add payment gateway integration
+
+✅ Add admin dashboard
+
+✅ Add monthly reports & analytics
+
+✅ Improve UI animations
+
+
+👨‍💻 Author
+
+Md Limon Islam
+📧 Email: [mdlimonislam134@gmail.com]
+💼 GitHub: https://github.com/your-username
+
+🪪 License
+
+This project is licensed under the MIT License – feel free to use and modify it.
+

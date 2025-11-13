@@ -31,19 +31,19 @@ const Navbar = () => {
             })
     }
 
-      useEffect(() => {
-    const html = document.querySelector('html')
-     html.setAttribute("data-theme", theme)
-     localStorage.setItem("theme", theme)
-  }, [theme])
+    useEffect(() => {
+        const html = document.querySelector('html')
+        html.setAttribute("data-theme", theme)
+        localStorage.setItem("theme", theme)
+    }, [theme])
 
     // handle theme
     const handleTheme = (checked) => {
-         setTheme(checked ? "dark": "light")
+        setTheme(checked ? "dark" : "light")
     }
     return (
-        <div>
-            <div className="navbar bg-base-100 shadow-sm">
+        <div className='w-11/12 mx-auto'>
+            <div className="navbar bg-base-100 shadow-sm flex justify-center items-center">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -69,9 +69,9 @@ const Navbar = () => {
                         onChange={(e) => handleTheme(e.target.checked)}
                         type="checkbox"
                         defaultChecked={localStorage.getItem('theme') === "dark"}
-                        className="toggle" />
+                        className="toggle mr-3" />
 
-                    <div className="dropdown dropdown-end">
+                    {/* <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn m-1">
                             {
                                 user
@@ -92,7 +92,54 @@ const Navbar = () => {
                         user
                             ? <button onClick={handleSignOut} className='btn btn-active btn-primary'>Log Out</button>
                             : <Link to='/login' className="btn btn-active btn-primary">Login</Link>
-                    }
+                    } */}
+
+
+                    {user ? (
+                        <div className="dropdown dropdown-end z-50">
+                            <div
+                                tabIndex={0}
+                                role="button"
+                                className="btn btn-ghost btn-circle avatar"
+                            >
+                                <div className="w-9 border-2 border-gray-300 rounded-full">
+                                    <img
+                                        alt="Tailwind CSS Navbar component"
+                                        referrerPolicy="no-referrer"
+                                        src={user.photoURL || "https://i.postimg.cc/rwWxJQ6w/user.png"}
+                                    />
+                                </div>
+                            </div>
+                            <ul
+                                tabIndex="-1"
+                                className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+                            >
+                                <div className=" pb-3 border-b border-b-gray-200">
+                                    <li className="text-sm font-bold">{user.displayName}</li>
+                                    <li className="text-xs">{user.email}</li>
+                                </div>
+                                <li className='mb-3'>
+                                    <button
+                                        onClick={signOutUser}
+                                        className="btn btn-xs text-left bg-linear-to-r from-pink-500 to-red-500 text-white"
+                                    >
+                                        {/* <IoLogOut /> */}
+                                         Logout
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    ) : (
+                        <Link
+                            to={"/login"}
+                            className="btn rounded-full border-gray-300  btn-sm bg-linear-to-r from-pink-500 to-purple-500 text-white"
+                        >
+                            {" "}
+                            Login
+                        </Link>
+                    )}
+
+
                 </div>
             </div>
         </div>

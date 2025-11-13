@@ -10,28 +10,30 @@ import PrivateRoutes from "./PrivateRoutes";
 import AboutUs from "../Pages/AboutUs";
 import Contuct from "../Pages/Contuct";
 import UpdateBills from "../Pages/UpdateBills";
+import ErrorElement from "../components/ErrorElement";
 
 const router = createBrowserRouter([
     {
         path: '/',
         Component: RootLayouts,
+        errorElement: <ErrorElement></ErrorElement>,
         children: [
             {
                 index: true,
                 Component: Home,
-                loader: () => fetch("http://localhost:3000/recent-bills")
+                loader: () => fetch("https://easy-bill-server.vercel.app/recent-bills"),
             },
             {
                 path: '/bills',
                 Component: Bills,
-                loader: () => fetch("http://localhost:3000/bills")
+                loader: () => fetch("https://easy-bill-server.vercel.app/bills")
             },
             {
                 path: '/bills-details/:id',
                 element: <PrivateRoutes>
                     <BillDetails></BillDetails>
                 </PrivateRoutes>,
-                loader: ({params}) => fetch(`http://localhost:3000/bills/${params.id}`)
+                loader: ({params}) => fetch(`https://easy-bill-server.vercel.app/bills/${params.id}`)
             },
             {
                 path: '/myPayBills',
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
             // {
             //     path: '/update-bills/:id',
             //     element: <UpdateBills></UpdateBills>,
-            //     loader: ({params}) => fetch(`http://localhost:3000/my-bills/${params.id}`)
+            //     loader: ({params}) => fetch(`https://easy-bill-server.vercel.app/my-bills/${params.id}`)
             // },
             {
                 path: '/register',

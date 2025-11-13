@@ -1,10 +1,12 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
-import { MdOutgoingMail } from 'react-icons/md';
+// import { MdOutgoingMail } from 'react-icons/md';
+
 
 const Contuct = () => {
     return (
-        <div className='py-10'>
-            <h2 className='text-3xl font-bold text-center'>Contuct Us</h2>
+        <div className='py-10 w-11/12 mx-auto'>
+
+            <h2 className='text-3xl font-bold text-center text-orange-400'>Contuct Us</h2>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8'>
                 <div className='bg-gray-400 p-5 rounded-2xl flex flex-col justify-center items-center'>
                     <span className='mb-3'><Mail size={44} /></span>

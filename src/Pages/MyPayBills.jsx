@@ -10,11 +10,12 @@ const MyPayBills = () => {
     const { user } = useAuth();
     const [bills, setBills] = useState([])
     const [selectedBillsId, setSelectedBillsId] = useState(null)
+    const [totalPaid, setTotalPaid] = useState(0);
     const modalRef = useRef();
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/my-bills?email=${user.email}`)
+            fetch(`https://easy-bill-server.vercel.app/my-bills?email=${user.email}`)
                 .then(res => res.json())
                 .then(data => {
                     setBills(data);
@@ -37,7 +38,7 @@ const MyPayBills = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 console.log("clicked")
-                fetch(`http://localhost:3000/my-bills/${id}`, {
+                fetch(`https://easy-bill-server.vercel.app/my-bills/${id}`, {
                     method: "DELETE",
 
                 })
@@ -78,7 +79,7 @@ const MyPayBills = () => {
 
         const updateBill = { userName, email, amount, address, phone, date }
 
-        fetch(`http://localhost:3000/my-bills/${selectedBillsId}`, {
+        fetch(`https://easy-bill-server.vercel.app/my-bills/${selectedBillsId}`, {
             method: "PATCH",
             headers: {
                 'content-type': 'application/json'
@@ -104,7 +105,19 @@ const MyPayBills = () => {
 
     }
 
-    // download bills pdf
+    // total paid 
+    useEffect(()=>{
+        fetch(`https://easy-bill-server.vercel.app/total-paid?email=${user.email}`)
+        .then(res=>res.json())
+        .then(data=>{
+            setTotalPaid(data);
+            // console.log("after get total bill", data);
+        })
+    },[user.email])
+    // console.log(totalPaid)
+
+
+    // DOWNLOAD ALL BILLS PDF
     // const downloadPDF = () => {
     //     const doc = new jsPDF();
     //     doc.text("EasyBill - My Bills Summary", 14, 15);
@@ -117,96 +130,91 @@ const MyPayBills = () => {
     //         bill.date,
     //     ]);
 
-    //     if(doc.autoTable){
     //         doc.autoTable({
     //         head: [tableColumn],
     //         body: tableRows,
     //         styles: { fontSize: 14, cellPadding: 4 },
     //         headStyles: { fillColor: [25, 118, 210], textColor: 255 },
     //         alternateRowStyles: { fillColor: [240, 240, 240] },
-    //     });  
-    //     }
-    //     else{
-    //         toast.error("❌ autoTable plugin not loaded properly!");
-    //         console.error("autoTable not found on jsPDF instance.");
-    //     }
-    //     // doc.autoTable({
-    //     //     head: [tableColumn],
-    //     //     body: tableRows,
-    //     //     styles: { fontSize: 14, cellPadding: 4 },
-    //     //     headStyles: { fillColor: [25, 118, 210], textColor: 255 },
-    //     //     alternateRowStyles: { fillColor: [240, 240, 240] },
-    //     // });
+    //     });
 
     //     doc.save("my-bills.pdf");
     // }
 
 
-//   const doc = new jsPDF();
-//   doc.text("EasyBill - Single Bill Report", 14, 15);
+    //   const doc = new jsPDF();
+    //   doc.text("EasyBill - Single Bill Report", 14, 15);
 
     const downloadPDF = () => {
-    const doc = new jsPDF();
-    let y = 20; // starting Y position
+        const doc = new jsPDF();
+        let y = 20; // starting Y position
 
-    // Title
-    doc.setFontSize(16);
-    doc.text("EasyBill - My Bills Summary", 14, y);
-    y += 10;
+        // Title
+        doc.setFontSize(16);
+        doc.text("EasyBill - My Bills Summary", 14, y);
+        y += 10;
 
-    // Table Header
-    doc.setFontSize(12);
-    doc.text("SL", 14, y);
-    doc.text("Name", 30, y);
-    doc.text("Email", 80, y);
-    doc.text("Amount", 140, y);
-    doc.text("Date", 170, y);
-    y += 6;
+        // Table Header
+        doc.setFontSize(12);
+        doc.text("SL", 14, y);
+        doc.text("Name", 30, y);
+        doc.text("Email", 80, y);
+        doc.text("Amount", 140, y);
+        doc.text("Date", 170, y);
+        y += 6;
 
-    // Draw a line under header
-    doc.line(14, y, 200, y);
-    y += 4;
+        // Draw a line under header
+        doc.line(14, y, 200, y);
+        y += 4;
 
-    // Table rows
-    bills.forEach((bill, index) => {
-      doc.text(`${index + 1}`, 14, y);
-      doc.text(bill.userName || "N/A", 30, y);
-      doc.text(bill.email || "N/A", 80, y);
-      doc.text(`${bill.amount || 0}`, 140, y);
-      doc.text(bill.date || "N/A", 170, y);
-      y += 8;
+        // Table rows
+        bills.forEach((bill, index) => {
+            doc.text(`${index + 1}`, 14, y);
+            doc.text(bill.userName || "N/A", 30, y);
+            doc.text(bill.email || "N/A", 80, y);
+            doc.text(`${bill.amount || 0}`, 140, y);
+            doc.text(bill.date || "N/A", 170, y);
+            y += 8;
 
-      // Page break
-      if (y > 280) {
-        doc.addPage();
-        y = 20;
-      }
-    });
+            // Page break
+            if (y > 280) {
+                doc.addPage();
+                y = 20;
+            }
+        });
 
-    doc.save("my-bills.pdf");
-    toast.success("✅ PDF downloaded successfully!");
-  };
-
+        doc.save("my-bills.pdf");
+        toast.success("✅ PDF downloaded successfully!");
+    };
 
 
     return (
-        <div className='py-10'>
+        <div className='w-11/12 mx-auto p-8 mt-10 mb-10 bg-gradient-to-br from-gray-900 via-indigo-900 to-black text-white rounded-2xl'>
             <h2 className='text-3xl font-bold text-center'>My Bills: {bills.length}</h2>
-            <button onClick={downloadPDF} className="btn btn-primary mb-4">
-                Download My All Bills (PDF)
+
+            {/* download all bils pdf btn */}
+            <button onClick={downloadPDF} className="btn btn-primary">
+                Download All Bills (PDF)
             </button>
-            <div className="overflow-x-auto">
+
+            {/* total paid */}
+            <div className='flex justify-end items-center'>
+                <h2 className='text-2xl font-bold text-yellow-400'>Total Paid: {totalPaid.totalPaid}</h2>
+            </div>
+
+            {/* TABLE */}
+            
+            <div className="overflow-x-auto mt-6">
                 <table className="table">
                     {/* head */}
-                    <thead>
+                    <thead className='text-yellow-400'>
                         <tr>
                             <th>Sl No.</th>
                             <th>Name</th>
                             <th>Amount / BillId</th>
-                            <th>Bill Id</th>
+                            <th>Phone / Date</th>
                             <th>Update</th>
                             <th>Delete</th>
-                            <th>Download</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -248,7 +256,7 @@ const MyPayBills = () => {
 
                                     {/* modal */}
                                     <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-                                        <div className="modal-box">
+                                        <div className="modal-box text-gray-800">
                                             <h3 className="font-bold text-lg">Update Your Bill!</h3>
                                             <form onSubmit={handleUpdate}>
                                                 <fieldset className="fieldset">

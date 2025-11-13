@@ -1,41 +1,3 @@
-// import React from "react";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Autoplay, Pagination } from "swiper/modules";
-// import "swiper/css";
-// import "swiper/css/pagination";
-
-// const Banner = () => {
-//   const bannersSliders = [
-//     // { id: 1, image: "https://i.ibb.co/m4Wj6gV/banner1.jpg" },
-//     { id:  },
-//     { id: 2, image: "https://i.ibb.co/7bX2LtT/electricity.jpg" },
-//     { id: 3, image: "https://i.ibb.co/dj1Jksd/banner3.jpg" },
-//   ];
-
-//   return (
-//     <Swiper
-//       modules={[Autoplay, Pagination]}
-//       autoplay={{ delay: 3000 }}
-//       pagination={{ clickable: true }}
-//       loop={true}
-//       className="w-full h-[400px]"
-//     >
-//       {bannersSliders.map((banner) => (
-//         <SwiperSlide key={banner.id}>
-//           <img
-//             src={banner.image}
-//             alt="banner"
-//             className="w-full h-full object-cover"
-//           />
-//         </SwiperSlide>
-//       ))}
-//     </Swiper>
-//   );
-// };
-
-// export default Banner;
-
-
 
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -75,7 +37,7 @@ const Banner = () => {
     >
       {cards.map(card => (
         <SwiperSlide key={card.id}>
-          <div className="bg-gray-400 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row mt-10 mb-20">
+          <div className="bg-gray-400 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row ">
             <img
               src={card.image}
               alt={card.title}

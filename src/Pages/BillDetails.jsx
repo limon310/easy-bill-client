@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 const BillDetails = () => {
     const { user } = useAuth();
@@ -9,7 +10,6 @@ const BillDetails = () => {
     const modalRef = useRef(null);
     // console.log(bill);
     const { title, category, location, description, image, amount, date, _id } = bill;
-    // console.log(amount)
 
     // handle modal
     const handleModalOpen = () => {
@@ -24,13 +24,13 @@ const BillDetails = () => {
         const currentYear = today.getFullYear();
         // console.log(`Bill Month/Year: ${billMonth + 1}/${billYear}`);
         // console.log(`Current Month/Year: ${currentMonth + 1}/${currentYear}`);
-        if(billMonth == currentMonth && billYear == currentYear){
+        if (billMonth == currentMonth && billYear == currentYear) {
             modalRef.current.showModal();
         }
-        else{
+        else {
             toast.error("only current month bills can be paid.")
         }
-        
+
     }
 
     // handle pay bill
@@ -48,7 +48,7 @@ const BillDetails = () => {
 
         const newBill = { email, billId, amount, userName, address, phone, date }
 
-        fetch("http://localhost:3000/my-bill", {
+        fetch("https://easy-bill-server.vercel.app/my-bill", {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
@@ -58,7 +58,7 @@ const BillDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success("Bill pay successfull");
-                if(data.insertedId){
+                if (data.insertedId) {
                     modalRef.current.close();
                 }
                 // console.log("after post:", data);
@@ -66,8 +66,8 @@ const BillDetails = () => {
     }
 
     return (
-        <div className='py-10'>
-            <h2 className='mb-10'>Bill details Page</h2>
+        <div className='py-10 text-white w-11/12 mx-auto'>
+            <h2 className='text-3xl font-bold text-center text-yellow-400'>Bill details Page</h2>
             <div className='flex gap-10 justify-center p-10 rounded-2xl'>
                 <div className=''>
                     <img className='rounded-2xl  w-[500px] h-[450px]'
@@ -85,7 +85,7 @@ const BillDetails = () => {
                             onClick={handleModalOpen}
                             className="btn btn-primary">Pay Now</button>
 
-                        <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
+                        <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle text-gray-800">
                             <div className="modal-box">
                                 <h3 className="font-bold text-lg">Pay Your Bill Just One Click!</h3>
                                 <form onSubmit={handlePayBill}>
@@ -137,6 +137,11 @@ const BillDetails = () => {
                     </div>
                 </div>
             </div>
+            <motion.div className='flex justify-end items-center'
+             
+            >
+                <Link to="/" className='btn btn-primary'>Back Home</Link>
+            </motion.div>
         </div>
     );
 };

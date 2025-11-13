@@ -20,7 +20,7 @@ const Login = () => {
         .then(result=>{
             console.log(result);
             toast.success("login success");
-            navigate(location.pathname || "/");
+            navigate(location.state || "/");
         })
         .catch(err=>{
             console.log(err);

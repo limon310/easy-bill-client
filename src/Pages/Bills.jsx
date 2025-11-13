@@ -8,7 +8,7 @@ const Bills = () => {
     const [selectByCategory, setSelectByCategory] = useState("");
     // console.log(bills);
 
-    const categories = [...new Set(bills.map(bill=> bill.category))];
+    const categories = [...new Set(bills.map(bill => bill.category))];
 
     // handle search
     const handleSearchByCategory = e => {
@@ -16,7 +16,7 @@ const Bills = () => {
         setSelectByCategory(search)
         // console.log("clicked search", search)
         setLoading(true)
-        fetch(`http://localhost:3000/search?search=${search}`)
+        fetch(`https://easy-bill-server.vercel.app/search?search=${search}`)
             .then(res => res.json())
             .then(data => {
                 setCategory(data);
@@ -26,34 +26,8 @@ const Bills = () => {
     }
 
     return (
-        <div className='mt-15 mb-20'>
+        <div className='w-11/12 mx-auto mt-15 mb-20'>
 
-            {/* <form onSubmit={handleSearchByCategory} className='flex justify-center items-center gap-5 py-5 '>
-                <label className="input">
-                    <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <g
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="2.5"
-                            fill="none"
-                            stroke="currentColor"
-                        >
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.3-4.3"></path>
-                        </g>
-                    </svg>
-                    <input type="search" name='search' placeholder="Search By Category" />
-
-                </label>
-                <button className='btn btn-outline px-8 bg-gray-500'>
-                    {loading
-                        ? "Searching..."
-                        : "Search"
-                    }
-                </button>
-            </form> */}
-
-             {/* Dropdown Menu */}
             <div className="flex justify-center items-center gap-5 py-5">
                 <select
                     value={selectByCategory}
@@ -110,7 +84,7 @@ export default Bills;
 //         setLoading(true);
 
 //         try {
-//             const res = await fetch(`http://localhost:3000/search?search=${value}`);
+//             const res = await fetch(`https://easy-bill-server.vercel.app/search?search=${value}`);
 //             const data = await res.json();
 //             setCategory(data);
 //         } catch (error) {

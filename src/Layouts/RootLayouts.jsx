@@ -1,17 +1,21 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigation } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import Footer from '../components/Footer';
+import Loading from '../components/Loading';
 
 const RootLayouts = () => {
+    const {state} = useNavigation();
+    // console.log("loading", state)
     return (
-        <div className='flex flex-col min-h-screen w-11/12 mx-auto'>
+        <div className='flex flex-col min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800  '>
             <header>
                 <Navbar></Navbar>
             </header>
             <main className='flex-1'>
-                <Outlet></Outlet>
+                {state==="loading"?<Loading></Loading>:<Outlet></Outlet>}
+                {/* <Outlet></Outlet> */}
             </main>
             <footer>
                 <Footer></Footer>
