@@ -63,6 +63,46 @@ Md Limon Islam
 📧 Email: [mdlimonislam134@gmail.com]
 💼 GitHub: https://github.com/your-username
 
+Live Link: [https://easy-bill-9d276.web.app/]
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+## client side--
+git clone https://github.com/limon310/easy-bill-client
+
+## server side--
+git clone https://github.com/limon310/easy-bill-server
+
+2️⃣ Install Dependencies
+For server:
+cd server
+npm install
+
+For client:
+cd client
+npm install
+
+3️⃣ Set Environment Variables
+
+Create a .env file inside the server folder and add:
+
+PORT= process.env.PORT || 3000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+
+4️⃣ Run the Application
+Start backend server:
+npm run dev
+
+Start frontend:
+npm start
+
+
+Then open your browser and go to:
+👉 http://localhost:5173
+
 🪪 License
 
 This project is licensed under the MIT License – feel free to use and modify it.
