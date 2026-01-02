@@ -42,8 +42,8 @@ const Navbar = () => {
         setTheme(checked ? "dark" : "light")
     }
     return (
-        <div className='w-11/12 mx-auto'>
-            <div className="navbar bg-base-100 shadow-sm flex justify-center items-center">
+        <div className='w-full bg-base-100 shadow-sm'>
+            <div className="max-w-7xl mx-auto navbar  flex justify-center items-center">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -51,7 +51,7 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex="-1"
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-lg">
+                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-lg text-primary">
                             {links}
                         </ul>
                     </div>
@@ -59,7 +59,7 @@ const Navbar = () => {
                     <img className='w-10 h-10 rounded-full' src={logoImg} alt="" />
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1 text-lg">
+                    <ul className="menu menu-horizontal px-1 text-lg text-primary">
                         {links}
                     </ul>
                 </div>
@@ -107,16 +107,13 @@ const Navbar = () => {
                             </ul>
                         </div>
                     ) : (
-                        <>
                         <Link
                             to={"/login"}
-                            className="btn rounded-full border-gray-300  btn-sm bg-linear-to-r from-pink-500 to-purple-500 text-white"
+                            className="btn rounded-full btn-primary"
                         >
                             {" "}
                             Login
                         </Link>
-                        <Link to="/register" className='ml-3 btn btn-outline bg-gray-500   text-white rounded-2xl' >Register</Link>
-                        </>
                     )}
 
 

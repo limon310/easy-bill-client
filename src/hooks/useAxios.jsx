@@ -1,7 +1,7 @@
 import axios from "axios";
-
+// https://easy-bill-server.vercel.app
 const axiosInstance = axios.create({
-    baseURL: "https://easy-bill-server.vercel.app"
+    baseURL: "http://localhost:3000"
 })
 
 const useAxios = ()=>{

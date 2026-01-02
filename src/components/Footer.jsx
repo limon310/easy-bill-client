@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 const Footer = () => {
     return (
         <div className=''>
-            <footer className="footer footer-horizontal footer-center bg-gradient-to-br from-black via-gray-900 to-gray-800 text-yellow-400 rounded p-10">
+            <footer className="footer footer-horizontal footer-center bg-linear-to-br from-black via-gray-900 to-gray-800 text-yellow-400 rounded p-10">
                 <nav className="grid grid-flow-col gap-4 text-lg">
                     <Link to='/aboutUs' className="link link-hover">About Us</Link>
                     <Link to="/contuct" className="link link-hover">Contact</Link>

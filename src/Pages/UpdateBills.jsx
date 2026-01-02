@@ -19,7 +19,7 @@ const UpdateBills = () => {
         console.log("update bill button clicked", userName, email, amount, address, phone, date);
         const updateBill = {userName, email, amount, address, phone, date}
 
-        fetch(`https://easy-bill-server.vercel.app/my-bills/${bill._id}`,{
+        fetch(`http://localhost:3000/my-bills/${bill._id}`,{
             method: "PATCH",
             headers: {
                 'content-type': 'application/json'

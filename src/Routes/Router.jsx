@@ -21,19 +21,19 @@ const router = createBrowserRouter([
             {
                 index: true,
                 Component: Home,
-                loader: () => fetch("https://easy-bill-server.vercel.app/recent-bills"),
+                loader: () => fetch("http://localhost:3000/recent-bills"),
             },
             {
                 path: '/bills',
                 Component: Bills,
-                loader: () => fetch("https://easy-bill-server.vercel.app/bills")
+                loader: () => fetch("http://localhost:3000/bills")
             },
             {
                 path: '/bills-details/:id',
                 element: <PrivateRoutes>
                     <BillDetails></BillDetails>
                 </PrivateRoutes>,
-                loader: ({params}) => fetch(`https://easy-bill-server.vercel.app/bills/${params.id}`)
+                loader: ({params}) => fetch(`http://localhost:3000/bills/${params.id}`)
             },
             {
                 path: '/myPayBills',
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
             // {
             //     path: '/update-bills/:id',
             //     element: <UpdateBills></UpdateBills>,
-            //     loader: ({params}) => fetch(`https://easy-bill-server.vercel.app/my-bills/${params.id}`)
+            //     loader: ({params}) => fetch(`http://localhost:3000/my-bills/${params.id}`)
             // },
             {
                 path: '/register',

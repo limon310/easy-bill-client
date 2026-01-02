@@ -4,7 +4,7 @@ import React from 'react';
 
 const ReferralSection = () => {
   return (
-    <div className=" mx-auto p-8 rounded-xl shadow-2xl text-center bg-gradient-to-br from-gray-900 via-indigo-900 to-black text-yellow-400">
+    <div className="max-w-7xl mx-auto p-8 rounded-xl shadow-2xl text-center bg-linear-to-br from-gray-900 via-indigo-900 to-black text-yellow-400">
 
       <h2 className="text-4xl font-extrabold mb-4 py-3">
         Share the Love, Get Rewards!

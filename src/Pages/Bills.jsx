@@ -16,7 +16,7 @@ const Bills = () => {
         setSelectByCategory(search)
         // console.log("clicked search", search)
         setLoading(true)
-        fetch(`https://easy-bill-server.vercel.app/search?search=${search}`)
+        fetch(`http://localhost:3000/search?search=${search}`)
             .then(res => res.json())
             .then(data => {
                 setCategory(data);
@@ -84,7 +84,7 @@ export default Bills;
 //         setLoading(true);
 
 //         try {
-//             const res = await fetch(`https://easy-bill-server.vercel.app/search?search=${value}`);
+//             const res = await fetch(`http://localhost:3000/search?search=${value}`);
 //             const data = await res.json();
 //             setCategory(data);
 //         } catch (error) {

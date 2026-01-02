@@ -2,23 +2,68 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 @import "tailwindcss";
+
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
+  themes: light, dark;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  /* Brand */
+  --color-primary: oklch(62% 0.18 250);   /* Blue */
+  --color-secondary: oklch(60% 0.15 145);/* Green */
+  --color-accent: oklch(72% 0.20 85);    /* Amber */
+
+  /* Base */
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(97% 0.01 250);
+  --color-base-300: oklch(92% 0.015 250);
+
+  /* Neutral */
+  --color-neutral: oklch(35% 0.02 250);
+  --color-neutral-content: oklch(15% 0.01 250);
+
+  /* Feedback */
+  --color-success: oklch(65% 0.17 145);
+  --color-error: oklch(60% 0.22 25);
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+
+  /* Brand */
+  --color-primary: oklch(70% 0.16 250);
+  --color-secondary: oklch(72% 0.14 145);
+  --color-accent: oklch(78% 0.18 85);
+
+  /* Base */
+  --color-base-100: oklch(18% 0.02 250);
+  --color-base-200: oklch(22% 0.025 250);
+  --color-base-300: oklch(28% 0.03 250);
+
+  /* Neutral */
+  --color-neutral: oklch(80% 0.02 250);
+  --color-neutral-content: oklch(92% 0 0);
+
+  /* Feedback */
+  --color-success: oklch(72% 0.16 145);
+  --color-error: oklch(68% 0.20 25);
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-*{
-    @apply space-y-1
-     
+
+.heading {
+  @apply text-2xl md:text-3xl font-semibold text-center text-base-content;
 }
 
-.heading{
-  @apply text-3xl font-bold text-center
+
+a.active {
+  @apply text-secondary font-semibold
 }
- a.active{
-  @apply text-orange-400 font-semibold
-}
-*{
+
+* {
   font-family: "Inter", sans-serif;
 }

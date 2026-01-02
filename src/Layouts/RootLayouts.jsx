@@ -9,7 +9,7 @@ const RootLayouts = () => {
     const {state} = useNavigation();
     // console.log("loading", state)
     return (
-        <div className='flex flex-col min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800  '>
+        <div className='flex flex-col min-h-screen bg-base-100 text-base-content'>
             <header>
                 <Navbar></Navbar>
             </header>

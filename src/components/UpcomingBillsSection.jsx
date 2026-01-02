@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 const UpcomingBillsSection = () => {
 
     return (
-        <section className="pt-20">
+        <section className="max-w-7xl mx-auto pt-20">
             <div className='p-4 md:p-6 bg-gray-50 dark:bg-gray-900 rounded-2xl'>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center justify-center">
                 <span className='mr-2'><Clock /></span>

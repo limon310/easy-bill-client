@@ -3,14 +3,14 @@ import BillsCategory from '../components/BillsCategory';
 import RecentBills from './RecentBills';
 // import { useLoaderData } from 'react-router';
 // import RecentBillsCard from '../components/RecentBillsCard';
-import Banner from '../components/Banner';
+import Banner from '../components/banner/Banner';
 import ReferralSection from '../components/ReferralSection';
 import OurPartner from '../components/OurPartner';
 import SimpleTypeWriter from '../components/SimpleTypeWriter';
 import UpcomingBillsSection from '../components/UpcomingBillsSection';
 
 // category bills
-const categoryBillsPromise = fetch("https://easy-bill-server.vercel.app/category-bills")
+const categoryBillsPromise = fetch("http://localhost:3000/category-bills")
     .then(res => res.json())
 
 const Home = () => {
@@ -18,11 +18,11 @@ const Home = () => {
     // console.log(bills);
     // console.log( "data",typeof bills)
     return (
-        <div className='w-11/12 mx-auto'>
+        <div className=''>
 
-            <div className="flex   justify-center items-center text-3xl font-bold h-[150px] text-center mt-10 text-yellow-400">
+            {/* <div className="flex  justify-center items-center heading py-10">
                 <SimpleTypeWriter text="Welcome To My Easy-Bill Managemaent App!" speed={80} />
-            </div>
+            </div> */}
 
             <Banner></Banner>
 

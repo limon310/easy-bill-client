@@ -15,7 +15,7 @@ const MyPayBills = () => {
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`https://easy-bill-server.vercel.app/my-bills?email=${user.email}`)
+            fetch(`http://localhost:3000/my-bills?email=${user.email}`)
                 .then(res => res.json())
                 .then(data => {
                     setBills(data);
@@ -38,7 +38,7 @@ const MyPayBills = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 console.log("clicked")
-                fetch(`https://easy-bill-server.vercel.app/my-bills/${id}`, {
+                fetch(`http://localhost:3000/my-bills/${id}`, {
                     method: "DELETE",
 
                 })
@@ -79,7 +79,7 @@ const MyPayBills = () => {
 
         const updateBill = { userName, email, amount, address, phone, date }
 
-        fetch(`https://easy-bill-server.vercel.app/my-bills/${selectedBillsId}`, {
+        fetch(`http://localhost:3000/my-bills/${selectedBillsId}`, {
             method: "PATCH",
             headers: {
                 'content-type': 'application/json'
@@ -107,7 +107,7 @@ const MyPayBills = () => {
 
     // total paid 
     useEffect(()=>{
-        fetch(`https://easy-bill-server.vercel.app/total-paid?email=${user.email}`)
+        fetch(`http://localhost:3000/total-paid?email=${user.email}`)
         .then(res=>res.json())
         .then(data=>{
             setTotalPaid(data);

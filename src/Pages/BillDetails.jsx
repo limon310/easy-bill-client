@@ -47,7 +47,7 @@ const BillDetails = () => {
 
         const newBill = { email, billId, amount, userName, address, phone, date }
 
-        fetch("https://easy-bill-server.vercel.app/my-bill", {
+        fetch("http://localhost:3000/my-bill", {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
