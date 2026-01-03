@@ -10,7 +10,7 @@ const Footer = () => {
                     <Link to='/aboutUs' className="link link-hover">About Us</Link>
                     <Link to="/contuct" className="link link-hover">Contact</Link>
                     <Link className="link link-hover">Press kit</Link>
-                    
+
                 </nav>
                 <div>
                     <span className='text-gray-300'>Your dedicated platform for seamless financial oversight.<br></br> Track due dates, monitor expenses, and manage all your bills in one secure place.<br></br> Built to keep your finances stress-free and on schedule.</span>

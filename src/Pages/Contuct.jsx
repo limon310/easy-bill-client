@@ -13,7 +13,7 @@ const ContactPage = () => {
 
     return (
         <div className="min-h-screen bg-base-200 py-16 px-4">
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-7xl mx-auto">
 
                 {/* Header Section */}
                 <div className="text-center mb-16">
@@ -68,15 +68,15 @@ const ContactPage = () => {
                             <div className="card-body items-center text-center">
                                 <h3 className="card-title mb-2">Connect With Us</h3>
                                 <div className="flex gap-4">
-                                    <button className="btn btn-circle btn-ghost bg-white/10 hover:bg-white/20">
+                                    <a href='https://www.facebook.com/mdlimon.islam.1422409' target='_blank' className="btn btn-circle btn-ghost bg-white/10 hover:bg-white/20">
                                         <FaFacebook size={20} />
-                                    </button>
-                                    <button className="btn btn-circle btn-ghost bg-white/10 hover:bg-white/20">
+                                    </a>
+                                    <a href='https://www.linkedin.com/in/limon-dev/' target="_blank" className="btn btn-circle btn-ghost bg-white/10 hover:bg-white/20">
                                         <FaLinkedin size={20} />
-                                    </button>
-                                    <button className="btn btn-circle btn-ghost bg-white/10 hover:bg-white/20">
+                                    </a>
+                                    <a href='https://x.com/' target='_blank' className="btn btn-circle btn-ghost bg-white/10 hover:bg-white/20">
                                         <FaSquareXTwitter size={20} />
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
