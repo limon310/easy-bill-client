@@ -10,6 +10,7 @@ import SimpleTypeWriter from '../components/SimpleTypeWriter';
 import UpcomingBillsSection from '../components/UpcomingBillsSection';
 import ProblemSolution from '../components/banner/home/ProblemSolution';
 import HowItWorks from '../components/banner/home/HowItWorks';
+import Testimonials from '../components/testimonials/Testimonials';
 
 
 const Home = () => {
@@ -22,21 +23,26 @@ const Home = () => {
 
             <Banner></Banner>
 
-            {/* bill category */}
+            {/* bill category section */}
             <BillsCategory></BillsCategory>
             
-            {/* recent bills */}
+            {/* recent bills section */}
             <RecentBills></RecentBills>
 
             {/* problem and solution */}
             <ProblemSolution></ProblemSolution>
 
-            {/* how it works */}
+            {/* how it works section */}
             <HowItWorks></HowItWorks>
 
             <ReferralSection></ReferralSection>
             <UpcomingBillsSection></UpcomingBillsSection>
-            <OurPartner></OurPartner>
+
+            {/* testimonial section */}
+            <Testimonials></Testimonials>
+
+
+            {/* <OurPartner></OurPartner> */}
 
         </div>
     );
