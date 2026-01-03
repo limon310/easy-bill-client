@@ -7,7 +7,7 @@ const CategoryCard = ({ categorie }) => {
     return (
         <div className='py-8'>
             <motion.div 
-            className="card bg-base-100"
+            className="card bg-base-200 text-base-content"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}

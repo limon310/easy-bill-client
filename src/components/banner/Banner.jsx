@@ -12,8 +12,8 @@ const Banner = () => {
 
   return (
     <Swiper
-      modules={[ Pagination]}
-      // modules={[Autoplay, Pagination]}
+      // modules={[ Pagination]}
+      modules={[Autoplay, Pagination]}
       autoplay={{ delay: 4000 }}
       pagination={{ clickable: true }}
       loop={true}

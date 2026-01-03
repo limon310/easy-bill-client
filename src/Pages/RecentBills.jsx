@@ -1,8 +1,6 @@
 import React from 'react';
 import RecentBillsCard from '../components/RecentBillsCard';
 import { Link, useLoaderData } from 'react-router';
-// const recentBillsPromise = fetch("http://localhost:3000/recent-bills")
-//     .then(res => res.json())
 
 const RecentBills = () => {
     const bills = useLoaderData();
@@ -18,7 +16,7 @@ const RecentBills = () => {
                 }
             </div>
             <div className="flex justify-center items-center mb-15">
-                <Link to='bills' className="btn btn-primary text-lg">See All Bills</Link>
+                <Link to='bills' className="btn btn-primary text-lg btn-outline">See All Bills</Link>
             </div>
         </div>
     );

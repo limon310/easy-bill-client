@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLoaderData } from 'react-router';
-import AllBilsCard from '../components/AllBilsCard';
+import AllBillsCard from '../components/AllBilsCard';
 const Bills = () => {
     const bills = useLoaderData();
     const [category, setCategory] = useState(bills)
@@ -49,10 +49,10 @@ const Bills = () => {
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-5'>
                 {
-                    category.map(bill => <AllBilsCard
+                    category.map(bill => <AllBillsCard
                         key={bill._id}
                         bill={bill}
-                    ></AllBilsCard>)
+                    ></AllBillsCard>)
                 }
             </div>
         </div>
