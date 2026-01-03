@@ -8,6 +8,7 @@ import ReferralSection from '../components/ReferralSection';
 import OurPartner from '../components/OurPartner';
 import SimpleTypeWriter from '../components/SimpleTypeWriter';
 import UpcomingBillsSection from '../components/UpcomingBillsSection';
+import ProblemSolution from '../components/ProblemSolution';
 
 
 const Home = () => {
@@ -22,9 +23,12 @@ const Home = () => {
 
             {/* bill category */}
             <BillsCategory></BillsCategory>
-
+            
             {/* recent bills */}
             <RecentBills></RecentBills>
+
+            {/* problem and solution */}
+            <ProblemSolution></ProblemSolution>
 
             <ReferralSection></ReferralSection>
             <UpcomingBillsSection></UpcomingBillsSection>

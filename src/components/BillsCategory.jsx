@@ -20,7 +20,7 @@ const BillsCategory = () => {
             return res.data;
         }
     })
-    console.log(categoryBills);
+    // console.log(categoryBills);
 
     if(isLoading){
         return <Loading></Loading>
