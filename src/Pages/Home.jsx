@@ -10,8 +10,8 @@ import SimpleTypeWriter from '../components/SimpleTypeWriter';
 import UpcomingBillsSection from '../components/UpcomingBillsSection';
 
 // category bills
-const categoryBillsPromise = fetch("http://localhost:3000/category-bills")
-    .then(res => res.json())
+// const categoryBillsPromise = fetch("http://localhost:3000/category-bills")
+//     .then(res => res.json())
 
 const Home = () => {
     // const bills = useLoaderData();
@@ -27,7 +27,8 @@ const Home = () => {
             <Banner></Banner>
 
             {/* bill category */}
-            <BillsCategory categoryBillsPromise={categoryBillsPromise}></BillsCategory>
+            {/* <BillsCategory categoryBillsPromise={categoryBillsPromise}></BillsCategory> */}
+            <BillsCategory></BillsCategory>
 
             {/* recent bills */}
             <RecentBills></RecentBills>

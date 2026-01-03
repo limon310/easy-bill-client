@@ -8,7 +8,7 @@ const RecentBills = () => {
     const bills = useLoaderData();
     return (
         <div className='max-w-7xl mx-auto'>
-            <h2 className='text-3xl font-bold text-center text-white'>Recent Bills</h2>
+            <h2 className='text-3xl font-bold'>Recent <span className='text-secondary'>Bills</span></h2>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-15'>
                 {
                     bills.map(bill => <RecentBillsCard

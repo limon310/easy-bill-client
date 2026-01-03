@@ -1,6 +1,7 @@
 import React from 'react';
 import bannerImg from '../../assets/content1.jpg'
 import { Link } from 'react-router';
+
 const Content1 = () => {
     return (
         <div

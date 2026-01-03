@@ -17,7 +17,7 @@ const Banner = () => {
       autoplay={{ delay: 4000 }}
       pagination={{ clickable: true }}
       loop={true}
-      className="w-full mx-auto"
+      className="w-full mx-auto my-10"
     >
       <SwiperSlide><Content1 /></SwiperSlide>
       <SwiperSlide><Content2 /></SwiperSlide>
