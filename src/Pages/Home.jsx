@@ -11,6 +11,7 @@ import ProblemSolution from '../components/banner/home/ProblemSolution';
 import HowItWorks from '../components/banner/home/HowItWorks';
 import Testimonials from '../components/testimonials/Testimonials';
 import KeyFeatures from '../components/features/Features';
+import FAQ from '../components/faq/FAQ';
 
 
 const Home = () => {
@@ -44,7 +45,8 @@ const Home = () => {
             {/* testimonial section */}
             <Testimonials></Testimonials>
 
-            {/* <OurPartner></OurPartner> */}
+            {/* Faq section */}
+            <FAQ />
 
         </div>
     );
