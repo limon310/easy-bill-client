@@ -29,11 +29,8 @@ const router = createBrowserRouter([
                 loader: () => fetch("http://localhost:3000/bills")
             },
             {
-                path: '/bills-details/:id',
-                element: <PrivateRoutes>
-                    <BillDetails></BillDetails>
-                </PrivateRoutes>,
-                loader: ({params}) => fetch(`http://localhost:3000/bills/${params.id}`)
+                path: '/bill-details/:id',
+                Component: BillDetails
             },
             {
                 path: '/myPayBills',

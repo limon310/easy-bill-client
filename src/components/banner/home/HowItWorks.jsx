@@ -40,7 +40,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="py-24 bg-base-100 transition-colors duration-300">
+    <section className="pb-24 bg-base-100 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Section Header */}

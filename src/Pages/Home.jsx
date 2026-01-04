@@ -11,6 +11,7 @@ import UpcomingBillsSection from '../components/UpcomingBillsSection';
 import ProblemSolution from '../components/banner/home/ProblemSolution';
 import HowItWorks from '../components/banner/home/HowItWorks';
 import Testimonials from '../components/testimonials/Testimonials';
+import Pricing from '../components/banner/pricing/Pricing';
 
 
 const Home = () => {
@@ -40,7 +41,9 @@ const Home = () => {
 
             {/* testimonial section */}
             <Testimonials></Testimonials>
-
+            
+            {/* pricing section */}
+            <Pricing></Pricing>
 
             {/* <OurPartner></OurPartner> */}
 

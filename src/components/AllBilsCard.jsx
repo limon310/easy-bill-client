@@ -1,6 +1,7 @@
 
 import { CalendarDays, MapPin, Mail } from "lucide-react";
 import { FaBolt } from "react-icons/fa";
+import { Link } from "react-router";
 
 const AllBillsCard = ({ bill }) => {
   const {
@@ -12,8 +13,8 @@ const AllBillsCard = ({ bill }) => {
     image,
     date,
     amount,
-  } = bill;
-
+    _id
+  } = bill || {};
   return (
     <div className="card bg-base-100 border border-base-300 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
       
@@ -75,9 +76,9 @@ const AllBillsCard = ({ bill }) => {
 
         {/* Action */}
         <div className="card-actions justify-end pt-3">
-          <button className="btn btn-sm btn-success w-full">
+          <Link to={`/bill-details/${_id}`} className="btn btn-sm btn-success w-full">
             Pay Now
-          </button>
+          </Link>
         </div>
 
       </div>

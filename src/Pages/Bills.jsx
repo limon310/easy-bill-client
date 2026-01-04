@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useLoaderData } from 'react-router';
 import AllBillsCard from '../components/AllBilsCard';
+import { useQuery } from '@tanstack/react-query';
+import useAxios from '../hooks/useAxios';
+import Loading from '../components/Loading';
 const Bills = () => {
+    const axios = useAxios();
     const bills = useLoaderData();
     const [category, setCategory] = useState(bills)
     const [loading, setLoading] = useState(false)
@@ -25,6 +29,18 @@ const Bills = () => {
             })
     }
 
+    // tanstack query 
+    const { data: allBills = [], isLoading } = useQuery({
+        queryKey: ["bills-category"],
+        queryFn: async () => {
+            const res = await axios.get(`/search?search=${selectByCategory}`)
+            return res.data;
+        }
+    })
+    // console.log("all bills from tanstack query func", allBills)
+    if(isLoading){
+        return <Loading></Loading>
+    }
     return (
         <div className='w-11/12 mx-auto mt-15 mb-20'>
             <title>Easy Bill All-Bills</title>
@@ -49,7 +65,7 @@ const Bills = () => {
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-5'>
                 {
-                    category.map(bill => <AllBillsCard
+                    allBills.map(bill => <AllBillsCard
                         key={bill._id}
                         bill={bill}
                     ></AllBillsCard>)

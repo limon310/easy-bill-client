@@ -1,38 +1,57 @@
-import React, { useRef, useState } from 'react';
-import { Link, useLoaderData } from 'react-router';
-import useAuth from '../hooks/useAuth';
-import { toast } from 'react-toastify';
+
+import { useQuery } from "@tanstack/react-query";
+import {
+    CalendarDays,
+    MapPin,
+    Mail,
+    ArrowLeft,
+} from "lucide-react";
+import { FaBolt } from "react-icons/fa";
+import useAxios from "../hooks/useAxios";
+import { useNavigate, useParams } from "react-router";
+import { useRef } from "react";
+import useAuth from "../hooks/useAuth";
+import { toast } from "react-toastify";
+import BillDetailsSkeleton from "../components/skeelton/BillDetailsSkeleton";
+
 
 const BillDetails = () => {
-    const { user } = useAuth();
-    const bill = useLoaderData();
+    const axios = useAxios();
     const modalRef = useRef(null);
-    // console.log(bill);
-    const { title, category, location, description, image, amount, date, _id } = bill;
+    const { user } = useAuth();
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    const { data: bill = {}, isLoading } = useQuery({
+        queryKey: ["bill-details", id],
+        queryFn: async () => {
+            const res = await axios.get(`/bills/${id}`)
+            return res.data;
+        }
+    })
+    const {
+        title,
+        category,
+        email,
+        location,
+        description,
+        image,
+        date,
+        amount,
+        _id
+    } = bill || {};
 
     // handle modal
+    // date calculate
+    const today = new Date();
+    const billDate = new Date(date);
+    const billMonth = billDate.getMonth();
+    const billYear = billDate.getFullYear();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
     const handleModalOpen = () => {
-
-        const today = new Date();
-        const billDate = new Date(date);
-        // console.log(billDate)
-        const billMonth = billDate.getMonth();
-        const billYear = billDate.getFullYear();
-        // console.log(billYear)
-        const currentMonth = today.getMonth();
-        const currentYear = today.getFullYear();
-        // console.log(`Bill Month/Year: ${billMonth + 1}/${billYear}`);
-        // console.log(`Current Month/Year: ${currentMonth + 1}/${currentYear}`);
-        if (billMonth == currentMonth && billYear == currentYear) {
-            modalRef.current.showModal();
-        }
-        else {
-            toast.error("only current month bills can be paid.")
-        }
-
+        modalRef.current.showModal();
     }
-
-    // handle pay bill
 
     const handlePayBill = (e) => {
         e.preventDefault();
@@ -43,106 +62,215 @@ const BillDetails = () => {
         const address = e.target.address.value;
         const phone = e.target.phone.value;
         const date = e.target.date.value;
-        // console.log("pay bil button clicked", email, billId, amount, userName, address, phone, date);
-
         const newBill = { email, billId, amount, userName, address, phone, date }
 
-        fetch("http://localhost:3000/my-bill", {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(newBill)
-        })
-            .then(res => res.json())
-            .then(data => {
-                toast.success("Bill pay successfull");
-                if (data.insertedId) {
+        axios.post('my-bill', newBill)
+            .then(res => {
+                // console.log(res.data);
+                if (res.data.insertedId) {
+                    toast.success("payment success");
                     modalRef.current.close();
                 }
-                // console.log("after post:", data);
             })
     }
 
+    if(isLoading){
+        return <BillDetailsSkeleton />
+    }
+
     return (
-        <div className='py-10 w-11/12 mx-auto'>
-            <h2 className='text-3xl font-bold text-center text-yellow-400 pb-10'>Bill details Page</h2>
-            <div className='flex gap-10 justify-center p-10 rounded-2xl bg-gray-500 text-white'>
-                <div className=''>
-                    <img className='rounded-2xl  w-[500px] h-[450px]'
-                        src={image} alt="" />
+        <div className="max-w-5xl mx-auto py-10">
+
+            {/* Header */}
+            <div className="mb-6 flex items-center gap-3">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="btn btn-sm btn-ghost"
+                >
+                    <ArrowLeft size={18} />
+                </button>
+
+                <div>
+                    <h1 className="text-2xl font-semibold text-base-content">
+                        Bill Details
+                    </h1>
+                    <p className="text-sm text-base-content/60">
+                        Review and manage your bill information
+                    </p>
                 </div>
-                <div className=''>
-                    <h2 className='text-3xl font-bold text-yellow-400'>{title}</h2>
-                    <p className='text-2xl text-gray-900'>Category: {category}</p>
-                    <p className='text-2xl text-gray-900'>Description: {description}</p>
-                    <p className='text-2xl text-gray-900'>Location: {location}</p>
-                    <p className='text-2xl text-gray-900'>Amount: {amount}</p>
-                    <p className='text-2xl text-gray-900'>Date: {date}</p>
-                    <div className='mt-10'>
-                        <button
-                            onClick={handleModalOpen}
-                            className="btn btn-primary">Pay Now</button>
+            </div>
 
-                        <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle text-gray-800">
-                            <div className="modal-box">
-                                <h3 className="font-bold text-lg">Pay Your Bill Just One Click!</h3>
-                                <form onSubmit={handlePayBill}>
-                                    <fieldset className="fieldset">
-                                        {/* email */}
-                                        <label className="label">Email</label>
-                                        <input type="email" className="input" name='email' readOnly defaultValue={user?.email} />
-                                        {/* bill id */}
-                                        <label className="label">Bill Id</label>
-                                        <input type="text" name='billId' className="input"
-                                            readOnly
-                                            defaultValue={_id} />
-                                        {/* amount */}
-                                        <label className="label">Amount</label>
-                                        <input type="text" name='amount' className="input" readOnly
-                                            defaultValue={amount}
-                                        />
-                                        {/* User name */}
-                                        <label className="label">User Name</label>
-                                        <input type="text" name='userName' className="input"
-                                            placeholder='User Name'
-                                        />
-                                        {/* Address */}
-                                        <label className="label">Address</label>
-                                        <input type="text" name='address' className="input"
-                                            placeholder='Address'
-                                        />
-                                        {/* Phone */}
-                                        <label className="label">Phone</label>
-                                        <input type="text" name='phone' className="input"
-                                            placeholder='Phone'
-                                        />
-                                        {/* Date */}
-                                        <label className="label">Date</label>
-                                        <input type="text" name='date' className="input" readOnly
-                                            defaultValue={date}
-                                        />
-                                        <button className="btn btn-neutral mt-4">Please Your Bill</button>
-                                    </fieldset>
-                                </form>
+            {/* Main Card */}
+            <div className="card bg-base-100 border border-base-300 rounded-xl shadow-sm">
 
-                                <div className="modal-action">
-                                    <form method="dialog">
-                                        <button className="btn">Cancel</button>
-                                    </form>
-                                </div>
+                {/* Image */}
+                <figure className="h-56 overflow-hidden rounded-t-xl">
+                    <img
+                        src={image}
+                        alt={title}
+                        className="h-full w-full object-cover"
+                    />
+                </figure>
+
+                {/* Body */}
+                <div className="card-body p-6 space-y-6">
+
+                    {/* Title */}
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 rounded-xl bg-secondary/15 text-secondary">
+                            <FaBolt size={22} />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-semibold text-base-content">
+                                {title}
+                            </h2>
+                            <p className="text-sm text-base-content/60">
+                                {category}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Amount + Status */}
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                            <p className="text-sm text-base-content/60">
+                                Amount Due
+                            </p>
+                            <p className="text-3xl font-bold text-base-content">
+                                ৳ {amount}
+                            </p>
+                        </div>
+                        <span className="badge badge-warning badge-outline px-4 py-3 text-sm">
+                            Pending
+                        </span>
+                    </div>
+
+                    <div className="divider" />
+
+                    {/* Meta Info */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+
+                        <div className="flex items-center gap-3">
+                            <CalendarDays size={18} className="text-primary" />
+                            <div>
+                                <p className="text-base-content/60">Due Date</p>
+                                <p className="text-base-content">
+                                    {new Date(date).toDateString()}
+                                </p>
                             </div>
-                        </dialog>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                            <MapPin size={18} className="text-primary" />
+                            <div>
+                                <p className="text-base-content/60">Location</p>
+                                <p className="text-base-content">{location}</p>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                            <Mail size={18} className="text-primary" />
+                            <div>
+                                <p className="text-base-content/60">Billing Email</p>
+                                <p className="text-base-content">{email}</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* Description */}
+                    <div className="space-y-2">
+                        <h3 className="font-medium text-base-content">
+                            Description
+                        </h3>
+                        <p className="text-sm text-base-content/70 leading-relaxed">
+                            {description}
+                        </p>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="card-actions justify-end gap-3 pt-4 items-center">
+
+                        {
+                            billMonth === currentMonth && billYear === currentYear ? (
+                                /* Active Payment */
+                                <button
+                                    onClick={handleModalOpen}
+                                    className="btn btn-success btn-sm"
+                                >
+                                    Pay Now
+                                </button>
+                            ) : (
+                                /* Disabled Payment + Info */
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xs text-accent">
+                                        You can only pay bills for the current month.
+                                    </span>
+                                    <button
+                                        className="btn btn-success btn-sm btn-disabled"
+                                    >
+                                        Pay Now
+                                    </button>
+                                </div>
+                            )
+                        }
+
                     </div>
                 </div>
             </div>
-            <div className='flex justify-end items-center mt-5'
-             
-            >
-                <Link to="/" className='btn btn-primary'>Back Home</Link>
-            </div>
+            {/* modal */}
+            <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle text-gray-800">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Pay Your Bill Just One Click!</h3>
+                    <form onSubmit={handlePayBill}>
+                        <fieldset className="fieldset">
+                            {/* email */}
+                            <label className="label">Email</label>
+                            <input type="email" className="input" name='email' readOnly defaultValue={user?.email} />
+                            {/* bill id */}
+                            <label className="label">Bill Id</label>
+                            <input type="text" name='billId' className="input"
+                                readOnly
+                                defaultValue={_id} />
+                            {/* amount */}
+                            <label className="label">Amount</label>
+                            <input type="text" name='amount' className="input" readOnly
+                                defaultValue={amount}
+                            />
+                            {/* User name */}
+                            <label className="label">User Name</label>
+                            <input type="text" name='userName' className="input"
+                                defaultValue={user?.displayName}
+                            />
+                            {/* Address */}
+                            <label className="label">Address</label>
+                            <input type="text" name='address' className="input"
+                                placeholder='Address'
+                            />
+                            {/* Phone */}
+                            <label className="label">Phone</label>
+                            <input type="text" name='phone' className="input"
+                                placeholder='Phone'
+                            />
+                            {/* Date */}
+                            <label className="label">Date</label>
+                            <input type="text" name='date' className="input" readOnly
+                                defaultValue={date}
+                            />
+                            <button className="btn btn-neutral mt-4">Please Your Bill</button>
+                        </fieldset>
+                    </form>
+
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button className="btn">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
     );
 };
 
-export default BillDetails; <h2>Bill details</h2>
+export default BillDetails;
+

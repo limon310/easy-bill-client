@@ -10,7 +10,7 @@ const RootLayouts = () => {
     // console.log("loading", state)
     return (
         <div className='flex flex-col min-h-screen bg-base-100 text-base-content'>
-            <header>
+            <header className="sticky top-0 z-50">
                 <Navbar></Navbar>
             </header>
             <main className='flex-1'>

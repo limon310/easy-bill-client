@@ -4,6 +4,7 @@ import { FaBolt } from "react-icons/fa";
 import { Link } from "react-router";
 
 const RecentBillsCard = ({ bill }) => {
+  console.log("from recent bill card", bill)
   const {
     title,
     category,
@@ -13,6 +14,7 @@ const RecentBillsCard = ({ bill }) => {
     image,
     date,
     amount,
+    _id
   } = bill;
 
   return (
@@ -76,7 +78,7 @@ const RecentBillsCard = ({ bill }) => {
 
         {/* Action */}
         <div className="card-actions justify-end pt-3">
-          <Link to="/bills" className="btn btn-sm btn-success w-full">
+          <Link  to={`/bill-details/${_id}`} className="btn btn-sm btn-success w-full">
             Pay Now
           </Link>
         </div>

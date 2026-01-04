@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import { Trash2 } from 'lucide-react';
+import { FileText, Trash2 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import jsPDF from 'jspdf';
@@ -106,14 +106,14 @@ const MyPayBills = () => {
     }
 
     // total paid 
-    useEffect(()=>{
+    useEffect(() => {
         fetch(`http://localhost:3000/total-paid?email=${user.email}`)
-        .then(res=>res.json())
-        .then(data=>{
-            setTotalPaid(data);
-            // console.log("after get total bill", data);
-        })
-    },[user.email])
+            .then(res => res.json())
+            .then(data => {
+                setTotalPaid(data);
+                // console.log("after get total bill", data);
+            })
+    }, [user.email])
     // console.log(totalPaid)
 
     // DOWNLOAD ALL BILLS PDF
@@ -142,7 +142,7 @@ const MyPayBills = () => {
 
     const downloadPDF = () => {
         const doc = new jsPDF();
-        let y = 20; 
+        let y = 20;
 
         // Title
         doc.setFontSize(16);
@@ -189,8 +189,12 @@ const MyPayBills = () => {
             <h2 className='text-3xl font-bold text-center'>My Bills: {bills.length}</h2>
 
             {/* download all bils pdf btn */}
-            <button onClick={downloadPDF} className="btn btn-primary">
+            {/* <button onClick={downloadPDF} className="btn btn-primary">
                 Download All Bills (PDF)
+            </button> */}
+            <button onClick={downloadPDF} className="btn btn-outline btn-sm">
+                <FileText size={16} />
+                Download Invoice
             </button>
 
             {/* total paid */}
@@ -199,7 +203,7 @@ const MyPayBills = () => {
             </div>
 
             {/* TABLE */}
-            
+
             <div className="overflow-x-auto mt-6">
                 <table className="table">
                     {/* head */}
