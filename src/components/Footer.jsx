@@ -63,7 +63,7 @@ const Footer = () => {
                     <div>
                         <h4 className="font-bold text-lg mb-6 text-neutral-content">Support</h4>
                         <ul className="space-y-4">
-                            <li><a href="#" className="text-neutral opacity-70 hover:text-primary hover:opacity-100 transition-all">Help Center</a></li>
+                            <li><Link to="/contuct" className="text-neutral opacity-70 hover:text-primary hover:opacity-100 transition-all">Help Center</Link></li>
                             <li><a href="#" className="text-neutral opacity-70 hover:text-primary hover:opacity-100 transition-all">Privacy Policy</a></li>
                             <li><a href="#" className="text-neutral opacity-70 hover:text-primary hover:opacity-100 transition-all">Terms of Service</a></li>
                             <li><Link to="/contuct" className="text-neutral opacity-70 hover:text-primary hover:opacity-100 transition-all">Contact Us</Link></li>

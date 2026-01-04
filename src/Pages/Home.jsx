@@ -40,7 +40,7 @@ const Home = () => {
             <HowItWorks></HowItWorks>
 
             <ReferralSection></ReferralSection>
-            <UpcomingBillsSection></UpcomingBillsSection>
+            {/* <UpcomingBillsSection></UpcomingBillsSection> */}
 
             {/* testimonial section */}
             <Testimonials></Testimonials>
