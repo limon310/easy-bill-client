@@ -4,7 +4,7 @@ import { FaBolt } from "react-icons/fa";
 import { Link } from "react-router";
 
 const RecentBillsCard = ({ bill }) => {
-  console.log("from recent bill card", bill)
+  // console.log("from recent bill card", bill)
   const {
     title,
     category,

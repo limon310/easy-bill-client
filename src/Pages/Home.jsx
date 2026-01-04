@@ -5,13 +5,12 @@ import RecentBills from './RecentBills';
 // import RecentBillsCard from '../components/RecentBillsCard';
 import Banner from '../components/banner/Banner';
 import ReferralSection from '../components/ReferralSection';
-import OurPartner from '../components/OurPartner';
 import SimpleTypeWriter from '../components/SimpleTypeWriter';
 import UpcomingBillsSection from '../components/UpcomingBillsSection';
 import ProblemSolution from '../components/banner/home/ProblemSolution';
 import HowItWorks from '../components/banner/home/HowItWorks';
 import Testimonials from '../components/testimonials/Testimonials';
-import Pricing from '../components/banner/pricing/Pricing';
+import KeyFeatures from '../components/features/Features';
 
 
 const Home = () => {
@@ -30,6 +29,9 @@ const Home = () => {
             {/* recent bills section */}
             <RecentBills></RecentBills>
 
+            {/* why choice us */}
+            <KeyFeatures />
+
             {/* problem and solution */}
             <ProblemSolution></ProblemSolution>
 
@@ -41,9 +43,6 @@ const Home = () => {
 
             {/* testimonial section */}
             <Testimonials></Testimonials>
-            
-            {/* pricing section */}
-            <Pricing></Pricing>
 
             {/* <OurPartner></OurPartner> */}
 
