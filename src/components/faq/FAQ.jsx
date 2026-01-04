@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlineQuestionMarkCircle } from 'react-icons/hi';
+import { Link } from 'react-router';
 
 const faqs = [
     {
@@ -73,9 +74,9 @@ const FAQ = () => {
                 >
                     <p className="text-neutral">
                         Still have questions?
-                        <button className="text-primary font-bold ml-2 hover:underline">
+                        <Link to="/contuct" className="text-primary font-bold ml-2 hover:underline">
                             Contact our support team
-                        </button>
+                        </Link>
                     </p>
                 </motion.div>
             </div>

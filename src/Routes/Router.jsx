@@ -11,6 +11,10 @@ import AboutUs from "../Pages/AboutUs";
 import Contuct from "../Pages/Contuct";
 import UpdateBills from "../Pages/UpdateBills";
 import ErrorElement from "../components/ErrorElement";
+import PrivacyPolicy from "../Pages/privacyPolicy/PrivacyPolicy";
+import HelpCenter from "../Pages/helpCenter/HelpCenter";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import DashboardStatistics from "../components/dashboard/DashboardStatistics";
 
 const router = createBrowserRouter([
     {
@@ -32,25 +36,25 @@ const router = createBrowserRouter([
                 path: '/bill-details/:id',
                 Component: BillDetails
             },
-            {
-                path: '/myPayBills',
-                element: <PrivateRoutes>
-                    <MyPayBills></MyPayBills>
-                </PrivateRoutes>,
-            },
+            // {
+            //     path: '/myPayBills',
+            //     element: <PrivateRoutes>
+            //         <MyPayBills></MyPayBills>
+            //     </PrivateRoutes>,
+            // },
             // {
             //     path: '/update-bills/:id',
             //     element: <UpdateBills></UpdateBills>,
             //     loader: ({params}) => fetch(`http://localhost:3000/my-bills/${params.id}`)
             // },
-            {
-                path: '/register',
-                Component: Register
-            },
-            {
-                path: '/login',
-                Component: Login
-            },
+            // {
+            //     path: '/register',
+            //     Component: Register
+            // },
+            // {
+            //     path: '/login',
+            //     Component: Login
+            // },
             // aditional routes
             {
                 path: '/aboutUs',
@@ -59,6 +63,37 @@ const router = createBrowserRouter([
             {
                 path: '/contuct',
                 Component: Contuct
+            },
+            {
+                path: '/privacy-policy',
+                Component: PrivacyPolicy
+            },
+            {
+                path: '/help-center',
+                Component: HelpCenter
+            },
+        ]
+    },
+    // auth
+    { path: '/login', element: <Login /> },
+    { path: '/register', element: <Register /> },
+    {
+        path: "/dashboard",
+        element: <PrivateRoutes>
+            <DashboardLayout></DashboardLayout>
+        </PrivateRoutes>,
+        children: [
+            {
+                index: true,
+                element: <PrivateRoutes>
+                    <DashboardStatistics />
+                </PrivateRoutes>
+            },
+            {
+                path: "myPayBills",
+                element: <PrivateRoutes>
+                    <MyPayBills></MyPayBills>
+                </PrivateRoutes>
             }
         ]
     }

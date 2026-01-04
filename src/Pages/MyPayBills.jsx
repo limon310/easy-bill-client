@@ -1,15 +1,17 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import { FileText, Trash2 } from 'lucide-react';
+import { FileText, Trash2, Edit3, CreditCard, Calendar, MapPin } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { motion } from 'framer-motion';
 
 const MyPayBills = () => {
     const { user } = useAuth();
-    const [bills, setBills] = useState([])
-    const [selectedBillsId, setSelectedBillsId] = useState(null)
+    const [bills, setBills] = useState([]);
+    const [selectedBill, setSelectedBill] = useState(null);
     const [totalPaid, setTotalPaid] = useState(0);
     const modalRef = useRef();
 
@@ -17,128 +19,81 @@ const MyPayBills = () => {
         if (user?.email) {
             fetch(`http://localhost:3000/my-bills?email=${user.email}`)
                 .then(res => res.json())
-                .then(data => {
-                    setBills(data);
-                    // console.log(data);
-                })
+                .then(data => setBills(data));
         }
-    }, [user?.email,])
-    // console.log(bills)
+    }, [user?.email]);
 
-    // handle delete
+    useEffect(() => {
+        if (user?.email) {
+            fetch(`http://localhost:3000/total-paid?email=${user.email}`)
+                .then(res => res.json())
+                .then(data => setTotalPaid(data));
+        }
+    }, [user?.email]);
+
     const handleDelete = (id) => {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "Remove Bill?",
+            text: "This action cannot be undone.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonColor: "oklch(60% 0.22 25)", 
+            cancelButtonColor: "oklch(35% 0.02 250)", 
+            confirmButtonText: "Yes, delete"
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("clicked")
-                fetch(`http://localhost:3000/my-bills/${id}`, {
-                    method: "DELETE",
-
-                })
+                fetch(`http://localhost:3000/my-bills/${id}`, { method: "DELETE" })
                     .then(res => res.json())
                     .then(data => {
-                        console.log("after delete", data);
                         if (data.deletedCount > 0) {
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                            });
-                            const remainingBill = bills.filter(bill => bill._id !== id);
-                            setBills(remainingBill);
+                            toast.success("Bill removed successfully");
+                            setBills(bills.filter(bill => bill._id !== id));
                         }
-                    })
+                    });
             }
         });
-    }
+    };
 
-    // handle open modal
-    const handleOpenModal = (id) => {
-        // console.log("update button clicked", id)
-        setSelectedBillsId(id)
+    const handleOpenModal = (bill) => {
+        setSelectedBill(bill);
         modalRef.current.showModal();
-    }
-    // handleUpdate
+    };
+
     const handleUpdate = e => {
         e.preventDefault();
-        const updatedBillId = selectedBillsId;
-        const userName = e.target.userName.value;
-        const email = e.target.email.value;
-        const amount = e.target.amount.value;
-        const address = e.target.address.value;
-        const phone = e.target.phone.value;
-        const date = e.target.date.value;
-        // console.log("clicked Update", userName, email, amount, address, phone, date);
+        const formData = new FormData(e.target);
+        const updatedData = Object.fromEntries(formData.entries());
 
-        const updateBill = { userName, email, amount, address, phone, date }
-
-        fetch(`http://localhost:3000/my-bills/${selectedBillsId}`, {
+        fetch(`http://localhost:3000/my-bills/${selectedBill._id}`, {
             method: "PATCH",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(updateBill)
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(updatedData)
         })
             .then(res => res.json())
             .then(data => {
-                toast("bill update successfully");
-                console.log(data);
-
                 if (data.modifiedCount > 0) {
-                    const updatedBillData = bills.map(bill => {
-                        if (bill._id === updatedBillId) {
-                            return { ...bill, ...updateBill };
-                        }
-                        return bill;
-                    });
-                    setBills(updatedBillData);
+                    toast.success("Changes saved");
+                    setBills(bills.map(b => b._id === selectedBill._id ? { ...b, ...updatedData } : b));
                     modalRef.current.close();
                 }
-            })
+            });
+    };
 
-    }
-
-    // total paid 
-    useEffect(() => {
-        fetch(`http://localhost:3000/total-paid?email=${user.email}`)
-            .then(res => res.json())
-            .then(data => {
-                setTotalPaid(data);
-                // console.log("after get total bill", data);
-            })
-    }, [user.email])
-    // console.log(totalPaid)
-
-    // DOWNLOAD ALL BILLS PDF
     // const downloadPDF = () => {
     //     const doc = new jsPDF();
-    //     doc.text("EasyBill - My Bills Summary", 14, 15);
+    //     doc.setFontSize(18);
+    //     doc.setTextColor(62, 100, 250); // Matches your Primary Blue
+    //     doc.text("EasyBill - Payment Summary", 14, 20);
 
-    //     const tableColumn = ["Title", "Category", "Amount", "Date"];
-    //     const tableRows = bills.map((bill) => [
-    //         bill.title,
-    //         bill.category,
-    //         bill.amount,
-    //         bill.date,
-    //     ]);
-
-    //         doc.autoTable({
-    //         head: [tableColumn],
+    //     const tableRows = bills.map((b, i) => [i + 1, b.userName, b.amount, b.date, b.address]);
+    //     doc.autoTable({
+    //         startY: 30,
+    //         head: [['#', 'User', 'Amount', 'Date', 'Location']],
     //         body: tableRows,
-    //         styles: { fontSize: 14, cellPadding: 4 },
-    //         headStyles: { fillColor: [25, 118, 210], textColor: 255 },
-    //         alternateRowStyles: { fillColor: [240, 240, 240] },
+    //         headStyles: { fillColor: [62, 118, 250] }
     //     });
-
-    //     doc.save("my-bills.pdf");
-    // }
+    //     doc.save(`${user.displayName}-bills.pdf`);
+    // };
 
     const downloadPDF = () => {
         const doc = new jsPDF();
@@ -182,127 +137,151 @@ const MyPayBills = () => {
         toast.success("✅ PDF downloaded successfully!");
     };
 
-
     return (
-        <div className='w-11/12 mx-auto p-8 mt-10 mb-10 bg-gradient-to-br from-gray-900 via-indigo-900 to-black text-white rounded-2xl'>
-            <title>Easy Bill My-Pay-Bills</title>
-            <h2 className='text-3xl font-bold text-center'>My Bills: {bills.length}</h2>
+        <div className='min-h-screen bg-base-100 py-12 px-4 sm:px-8'>
+            <div className='max-w-7xl mx-auto'>
 
-            {/* download all bils pdf btn */}
-            {/* <button onClick={downloadPDF} className="btn btn-primary">
-                Download All Bills (PDF)
-            </button> */}
-            <button onClick={downloadPDF} className="btn btn-outline btn-sm">
-                <FileText size={16} />
-                Download Invoice
-            </button>
+                {/* Header & Stats Section */}
+                <div className='flex flex-col md:flex-row justify-between items-center gap-6 mb-10'>
+                    <div>
+                        <h1 className='text-4xl font-black text-neutral-content'>My Bill History</h1>
+                        <p className='text-neutral'>Manage and track your recent payments</p>
+                    </div>
 
-            {/* total paid */}
-            <div className='flex justify-end items-center'>
-                <h2 className='text-2xl font-bold text-yellow-400'>Total Paid: {totalPaid.totalPaid}</h2>
-            </div>
+                    <div className="stats shadow-lg bg-base-200 border border-base-300">
+                        <div className="stat">
+                            <div className="stat-title text-neutral">Total Bills</div>
+                            <div className="stat-value text-primary">{bills.length}</div>
+                        </div>
+                        <div className="stat">
+                            <div className="stat-title text-neutral">Total Paid</div>
+                            <div className="stat-value text-accent">${totalPaid.totalPaid || 0}</div>
+                        </div>
+                    </div>
+                </div>
 
-            {/* TABLE */}
+                {/* Toolbar */}
+                <div className='flex justify-between items-center mb-6'>
+                    <button onClick={downloadPDF} className="btn btn-primary btn-outline shadow-sm">
+                        <FileText size={18} className="mr-2" /> Export PDF Report
+                    </button>
+                </div>
 
-            <div className="overflow-x-auto mt-6">
-                <table className="table">
-                    {/* head */}
-                    <thead className='text-yellow-400'>
-                        <tr>
-                            <th>Sl No.</th>
-                            <th>Name</th>
-                            <th>Amount / BillId</th>
-                            <th>Phone / Date</th>
-                            <th>Update</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* row 1 */}
-                        {
-                            bills.map((bill, index) => <tr key={bill._id}>
-                                <th>
-                                    {index + 1}
-                                </th>
-                                <td>
-                                    <div className="flex items-center gap-3">
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle h-12 w-12">
-                                                <img
-                                                    src={user.photoURL}
-                                                    alt="Avatar Tailwind CSS Component" />
+                {/* Table Section */}
+                <div className="bg-base-200 rounded-3xl border border-base-300 overflow-hidden shadow-xl">
+                    <table className="table w-full">
+                        <thead className='bg-base-300/50 text-neutral-content uppercase text-xs tracking-wider'>
+                            <tr>
+                                <th className="py-4">User Details</th>
+                                <th>Payment Info</th>
+                                <th>Schedule</th>
+                                <th className="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-base-300">
+                            {bills.map((bill) => (
+                                <motion.tr
+                                    layout
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    key={bill._id}
+                                    className="hover:bg-base-300/30 transition-colors"
+                                >
+                                    <td>
+                                        <div className="flex items-center gap-4">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle h-12 w-12 border-2 border-primary/20">
+                                                    <img src={user.photoURL} alt="User" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="font-bold text-neutral-content">{bill.userName}</div>
+                                                <div className="text-xs text-neutral flex items-center gap-1">
+                                                    <MapPin size={12} /> {bill.address}
+                                                </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div className="font-bold">{bill.userName}</div>
-                                            <div className="text-sm opacity-50">{bill.address}</div>
-                                            <div className="text-sm opacity-50">{bill.email}</div>
+                                    </td>
+                                    <td>
+                                        <div className="flex flex-col">
+                                            <span className="font-bold text-lg text-primary">${bill.amount}</span>
+                                            <span className="text-xs font-mono text-neutral bg-base-100 w-fit px-1 rounded">#{bill.billId || 'N/A'}</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span>Amount: {bill.amount}</span>
-                                    <br></br>
-                                    <span>BillId: {bill.billId}</span>
-                                </td>
-                                <td>
-                                    <span>{bill.phone}</span>
-                                    <br></br>
-                                    <span>{bill.date}</span>
-                                </td>
-                                <th>
-                                    <button onClick={() => handleOpenModal(bill._id)} className="btn btn-ghost btn-xs">Update</button>
-                                    {/* <Link to={`/update-bills/${bill._id}`} className="btn btn-ghost btn-xs">Update</Link> */}
-
-                                    {/* modal */}
-                                    <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-                                        <div className="modal-box text-gray-800">
-                                            <h3 className="font-bold text-lg">Update Your Bill!</h3>
-                                            <form onSubmit={handleUpdate}>
-                                                <fieldset className="fieldset">
-                                                    {/* userName */}
-                                                    <label className="label">User Name</label>
-                                                    <input type="text" name='userName' className="input" defaultValue={bill.userName} />
-                                                    {/* email */}
-                                                    <label className="label">Email</label>
-                                                    <input type="email" name='email' className="input" defaultValue={bill.email} />
-                                                    {/* phone */}
-                                                    <label className="label">Phone</label>
-                                                    <input type="text" name='phone' className="input" defaultValue={bill.phone} />
-                                                    {/* address */}
-                                                    <label className="label">Address</label>
-                                                    <input type="address" name="address" className="input" defaultValue={bill.address} />
-                                                    {/* amount */}
-                                                    <label className="label">Amount</label>
-                                                    <input type="amount" name="amount" className="input" defaultValue={bill.amount} />
-                                                    {/* date */}
-                                                    <label className="label">Date</label>
-                                                    <input type="date" name="date" className="input" defaultValue={bill.date} />
-                                                    <button className="btn btn-neutral mt-4">Update</button>
-                                                </fieldset>
-                                            </form>
-
-                                            <div className="modal-action">
-                                                <form method="dialog">
-                                                    <button className="btn">Cancel</button>
-                                                </form>
-                                            </div>
+                                    </td>
+                                    <td>
+                                        <div className="text-sm text-neutral-content flex items-center gap-2">
+                                            <Calendar size={14} className="text-secondary" /> {bill.date}
                                         </div>
-                                    </dialog>
-
-                                </th>
-                                <th>
-                                    <button onClick={() => handleDelete(bill._id)} className='btn btn-outline'><Trash2 /></button>
-                                </th>
-                                <th>
-                                    {/* <button onClick={()=>downloadSingleBill(bill)} className='cursor-pointer btn btn-outline'>Download Bill</button> */}
-                                </th>
-                            </tr>)
-                        }
-                    </tbody>
-                </table>
+                                        <div className="text-xs text-neutral">{bill.phone}</div>
+                                    </td>
+                                    <td>
+                                        <div className="flex justify-center gap-2">
+                                            <button
+                                                onClick={() => handleOpenModal(bill)}
+                                                className="btn btn-square btn-ghost text-secondary hover:bg-secondary/10"
+                                            >
+                                                <Edit3 size={18} />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(bill._id)}
+                                                className="btn btn-square btn-ghost text-error hover:bg-error/10"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </motion.tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
+            {/* Update Modal */}
+            <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box bg-base-100 border border-base-300 p-0 overflow-hidden">
+                    <div className="bg-primary p-6 text-white">
+                        <h3 className="font-bold text-2xl flex items-center gap-2">
+                            <CreditCard /> Update Transaction
+                        </h3>
+                        <p className="text-white/80 text-sm">Modify the bill details for reference</p>
+                    </div>
+
+                    <form onSubmit={handleUpdate} className="p-6 space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="form-control">
+                                <label className="label text-xs font-bold text-neutral uppercase">Payee Name</label>
+                                <input type="text" name='userName' className="input input-bordered bg-base-200" defaultValue={selectedBill?.userName} />
+                            </div>
+                            <div className="form-control">
+                                <label className="label text-xs font-bold text-neutral uppercase">Amount ($)</label>
+                                <input type="number" name="amount" className="input input-bordered bg-base-200" defaultValue={selectedBill?.amount} />
+                            </div>
+                        </div>
+
+                        <div className="form-control">
+                            <label className="label text-xs font-bold text-neutral uppercase">Address</label>
+                            <input type="text" name="address" className="input input-bordered bg-base-200" defaultValue={selectedBill?.address} />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="form-control">
+                                <label className="label text-xs font-bold text-neutral uppercase">Phone</label>
+                                <input type="text" name='phone' className="input input-bordered bg-base-200" defaultValue={selectedBill?.phone} />
+                            </div>
+                            <div className="form-control">
+                                <label className="label text-xs font-bold text-neutral uppercase">Date</label>
+                                <input type="date" name="date" className="input input-bordered bg-base-200" defaultValue={selectedBill?.date} />
+                            </div>
+                        </div>
+
+                        <div className="modal-action flex gap-2 pt-4">
+                            <button type="button" onClick={() => modalRef.current.close()} className="btn btn-ghost flex-1">Cancel</button>
+                            <button type="submit" className="btn btn-primary flex-1">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </dialog>
         </div>
     );
 };

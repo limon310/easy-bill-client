@@ -9,6 +9,7 @@ import {
   TrendingUp,
   Globe
 } from 'lucide-react';
+import { Link } from 'react-router';
 
 const AboutUs = () => {
   const stats = [
@@ -49,9 +50,9 @@ const AboutUs = () => {
             We're here to turn that monthly headache into a three-click breeze.
           </p>
           <div className="flex justify-center gap-4">
-            <button className="btn btn-primary  px-8 py-5 rounded-lg text-lg font-semibold transition-all shadow-lg">
+            <Link to="/bills" className="btn btn-primary  px-8 py-5 rounded-lg text-lg font-semibold transition-all shadow-lg">
               Get Started
-            </button>
+            </Link>
             <button className="btn btn-secondary px-8 py-3 rounded-lg font-semibold text-lg">
               Our Story
             </button>
